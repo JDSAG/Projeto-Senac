@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pojeto Cardápio</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-zinc-900 flex justify-center items-center min-h-screen">
+        <div class="w-[320px] bg-gray-200 rounded-lg overflow-hidden">
+            <header class="p-3">
+                <div class="bg-white flex items-center gap-2 px-3 py-2 rounded">
+                    <i class="search-container"></i>
+                    <input type="text" placeholder="Buscar no Cardápio" class="w-full outline-none text-sm">
+                </div>
+                <div class="mt-3 h-32 bg-gray-300 rounded">
+                    <img src="" alt="" class="w-full h-full object-cover rounded">
+                </div>
+            </header>
+            <section class="p-3">
+                <div class="mb-4">
+                    <div class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded">
+                        Mesa 20
+                    </div>
+                </div>
+                <div class="bg-white rounded p-2 mb-4">
+                    <div class="flex items-center gap-2">     
+                        <button class="bg-gray-100 px-3 py-2 rounded">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </button>
+                        <div class="flex gap-2 overflow-x-auto text-xs">
+                            <button class="bg-zinc-800 text-white px-3 py-2 rounded whitespace-nowrap">Entrada</button>
+                            <button class="px-3 py-2 whitespace-nowrap">Principal</button>
+                            <button class="px-3 py-2 whitespace-nowrap">Bebidas</button>
+                            <button class="px-3 py-2 whitespace-nowrap">Sobremesas</button>
+                            <button class="px-3 py-2 whitespace-nowrap">Água</button>
+                        </div>
+                    </div>
+                </div>
+                <ul class="hidden">
+                    <li><button>Entrada</button></li>
+                    <li><button>Principal</button></li>
+                    <li><button>Bebidas</button></li>
+                    <li><button>Sobremesas</button></li>
+                    <li><button>Água</button></li>
+                </ul>
+            </section>
+        </div>
+    </body>
+</html>
