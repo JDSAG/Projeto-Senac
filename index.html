@@ -4,29 +4,32 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Projeto Cardápio</title>
+        <link rel="stylesheet" href="style.css">
 
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-
-    <body class="bg-gray-100">
+    <body class="bg-gray-100 scroll-smooth">
+        <!--Container principal-->
         <div class="max-w-7xl mx-auto min-h-screen bg-gray-200">
+            <!--Banner-->
             <div id="banner" class="relative h-56 overflow-hidden">
                 <img src="img/download (1).jpg" alt="Banner" class="w-full h-full object-cover">
 
                 <div class="absolute inset-0 bg-black/20"></div>
 
+                <!--Barra de pesquisa-->
                 <div class="absolute bottom-4 left-4 right-4">
                     <div class="relative">
                         <input type="text" placeholder="Buscar no cardápio" class="w-full pl-10 pr-4 py-3 rounded-xl bg-white shadow-lg outline-none">
 
                         <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                         </svg>
                     </div>
                 </div>
             </div>
 
+            <!--Barra fixa-->
             <div id="stickyBar" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-lg transform -translate-y-full transition-all duration-300">
                 <div class="max-w-7xl mx-auto p-4">
                     <div class="relative">
@@ -50,6 +53,10 @@
                             Bebidas
                         </button>
 
+                        <button class="bg-gray-100 px-4 rounded-lg whitespace-nowrap">
+                            Massa
+                        </button>
+
                         <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
                             Sobremesas
                         </button>
@@ -57,70 +64,230 @@
                 </div>
             </div>
 
+            <!--Menu de categorias-->
             <div id="menuBar" class="bg-white shadow-sm">
                 <div class="p-4">
                     <div class="flex gap-2 overflow-x-auto">
-                        <button class="bg-gray-900 text-white px-4 py-2 rounded-lg whitespace-nowrap">
+                        <a href="#entrada" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
                             Entrada
-                        </button>
-
-                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                        </a>
+                        <a href="#principal" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
                             Principal
-                        </button>
+                        </a>
 
-                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                        <a href="#bebidas" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
                             Bebidas
-                        </button>
+                        </a>
 
-                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                        <a href="#massa" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                            Massa
+                        </a>
+
+                        <a href="#sobremesas" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
                             Sobremesas
-                        </button>
+                        </a>
                     </div>
                 </div>
             </div>
 
+            <!--Identificação da mesa-->
             <div class="p-4">
                 <span class="bg-blue-500 text-white px-3 py-1 rounded-lg">
                     Mesa 20
                 </span>
             </div>
 
+            <!--Conteúdo principal-->
             <div class="p-4 grid lg:grid-cols-3 gap-4">
                 <div class="lg:col-span-2">
-                    <h2 class="text-2xl font-bold mb-4">
-                        Entrada
-                    </h2>
-
-                    <div class="space-y-4">
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center">
+                    <section id="entrada" class="mb-10">
+                        <h2 class="text-2xl font-bold mb-4">
+                            Entrada
+                        </h2>
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
                             <div>
                                 <h3 class="font-bold text-lg">
-                                    Pizza Portuguesa
+                                    Coquetel de camarão
                                 </h3>
 
                                 <p class="text-gray-500 text-sm mt-1">
-                                    Molho de tomate, queijo,
-                                    presunto, ovos e cebola.
+                                    O coquetel de camarão é uma entrada clássica e refrescante, 
+                                    muito popular nos anos 80 e que continua atemporal. 
+                                    Ele consiste em camarões cozidos e resfriados, servidos sobre 
+                                    um molho cremoso à base de maionese, ketchup e conhaque (molho rosé)
                                 </p>
 
                                 <p class="font-bold text-xl mt-3">
-                                    R$ 50,90
+                                    R$ 54,90
                                 </p>
                             </div>
-                            <img src="img/download.jpg" alt="Pizza Portuguesa" class="w-24 h-24 rounded-lg object-cover">
+
+                            <img src="img/coquetel-de-camarao-730x546.jpeg.webp" alt="Coquetel de camarão" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Brusqueta
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    Uma brusqueta tradicional, é um antepasto clássico italiano que 
+                                    consiste em uma fatia de pão tostado coberta com azeite, 
+                                    alho e ingredientes frescos ou refogados 
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 58,90
+                                </p>
+                            </div>
+
+                            <img src="img/brusqueta-730x548.jpeg.webp" alt="Brusqueta" class="w-24 h-24 rounded-lg object-cover">
                         </div>
 
-                        <div class="bg-white rounded-xl h-28"></div>
-                        <div class="bg-white rounded-xl h-28"></div>
-                        <div class="bg-white rounded-xl h-28"></div>
-                        <div class="bg-white rounded-xl h-28"></div>
-                        <div class="bg-white rounded-xl h-28"></div>
-                        <div class="bg-white rounded-xl h-28"></div>
-                        <div class="bg-white rounded-xl h-28"></div>
-                        <div class="bg-white rounded-xl h-28"></div>
-                    </div>
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Carpaccio de salmão defumado
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    É uma entrada leve e sofisticada que consiste em finíssimas 
+                                    fatias de salmão submetidas ao processo de defumação.
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 60,90
+                                </p>
+                            </div>
+
+                            <img src="img/carpaccio-de-salmao-defumado-730x548.jpg.webp" alt="Carpaccio de salmão defumado" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Guacamole
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    O guacamole é um molho ou pasta tradicional da culinária mexicana, 
+                                    feito à base de abacate amassado. De origem asteca, 
+                                    seu nome vem da palavra em nahuatl ahuacamolli (união de ahuacatl, abacate, com molli, molho). 
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 79,90
+                                </p>
+                            </div>
+
+                            <img src="img/guacamole-capa-730x548.png.webp" alt="Guacamole" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                    </section>
+
+                    <section id="principal" class="mb-10">
+                        <h2 class="text-2xl font-bold mb-4">
+                            Principal
+                        </h2>
+
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Coquetel de camarão
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    O coquetel de camarão é uma entrada clássica e refrescante, 
+                                    muito popular nos anos 80 e que continua atemporal. 
+                                    Ele consiste em camarões cozidos e resfriados, servidos sobre 
+                                    um molho cremoso à base de maionese, ketchup e conhaque (molho rosé)
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 54,90
+                                </p>
+                            </div>
+
+                            <img src="img/coquetel-de-camarao-730x546.jpeg.webp" alt="Coquetel de camarão" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Brusqueta
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    Uma brusqueta tradicional, é um antepasto clássico italiano que 
+                                    consiste em uma fatia de pão tostado coberta com azeite, 
+                                    alho e ingredientes frescos ou refogados 
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 58,90
+                                </p>
+                            </div>
+
+                            <img src="img/brusqueta-730x548.jpeg.webp" alt="Brusqueta" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Carpaccio de salmão defumado
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    É uma entrada leve e sofisticada que consiste em finíssimas 
+                                    fatias de salmão submetidas ao processo de defumação.
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 60,90
+                                </p>
+                            </div>
+
+                            <img src="img/carpaccio-de-salmao-defumado-730x548.jpg.webp" alt="Carpaccio de salmão defumado" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-6">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Guacamole
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    O guacamole é um molho ou pasta tradicional da culinária mexicana, 
+                                    feito à base de abacate amassado. De origem asteca, 
+                                    seu nome vem da palavra em nahuatl ahuacamolli (união de ahuacatl, abacate, com molli, molho). 
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 79,90
+                                </p>
+                            </div>
+
+                            <img src="img/guacamole-capa-730x548.png.webp" alt="Guacamole" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+                    </section>
+
+                    <section id="bebidas" class="mb-10">
+                        <h2 class="text-2xl font-bold mb-4">
+                            Bebidas
+                        </h2>
+                        <div class="bg-white rounded-xl p-4">
+                            Bebidas aqui
+                        </div>
+                    </section>
+
+                    <section id="sobremesas" class="mb-10">
+                        <h2 class="text-2xl font-bold mb-4">
+                            Sobremesas
+                        </h2>
+
+                        <div class="bg-white rounded-xl p-4">
+                            Sobremesas aqui
+                        </div>
+                    </section>
                 </div>
 
+                <!--Área do pedido (desktop)-->
                 <aside class="hidden lg:block bg-white rounded-xl p-4">
                     <h2 class="font-bold text-lg mb-4">
                         Seu Pedido
@@ -129,5 +296,24 @@
                 </aside>
             </div>
         </div>
+
+        <script>
+            const banner = document.getElementById('banner');
+            const stickyBar = document.getElementById('stickyBar');
+
+            window.addEventListener('scroll', () => {
+
+                const bannerHeight = banner.offsetHeight;
+
+                if (window.scrollY > bannerHeight - 80) {
+                    stickyBar.classList.remove('-translate-y-full');
+                    stickyBar.classList.add('translate-y-0');
+                } else {
+                    stickyBar.classList.add('-translate-y-full');
+                    stickyBar.classList.remove('translate-y-0');
+                }
+
+            });
+        </script>
     </body>
 </html>
