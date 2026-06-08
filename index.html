@@ -1,52 +1,133 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Pojeto Cardápio</title>
+        <title>Projeto Cardápio</title>
+
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-    <body class="bg-zinc-900 flex justify-center items-center min-h-screen">
-        <div class="w-[320px] bg-gray-200 rounded-lg overflow-hidden">
-            <header class="p-3">
-                <div class="bg-white flex items-center gap-2 px-3 py-2 rounded">
-                    <i class="search-container"></i>
-                    <input type="text" placeholder="Buscar no Cardápio" class="w-full outline-none text-sm">
-                </div>
-                <div class="mt-3 h-32 bg-gray-300 rounded">
-                    <img src="" alt="" class="w-full h-full object-cover rounded">
-                </div>
-            </header>
-            <section class="p-3">
-                <div class="mb-4">
-                    <div class="inline-block bg-blue-500 text-white text-xs px-2 py-1 rounded">
-                        Mesa 20
+
+    <body class="bg-gray-100">
+        <div class="max-w-7xl mx-auto min-h-screen bg-gray-200">
+            <div id="banner" class="relative h-56 overflow-hidden">
+                <img src="img/download (1).jpg" alt="Banner" class="w-full h-full object-cover">
+
+                <div class="absolute inset-0 bg-black/20"></div>
+
+                <div class="absolute bottom-4 left-4 right-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Buscar no cardápio" class="w-full pl-10 pr-4 py-3 rounded-xl bg-white shadow-lg outline-none">
+
+                        <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
                     </div>
                 </div>
-                <div class="bg-white rounded p-2 mb-4">
-                    <div class="flex items-center gap-2">     
-                        <button class="bg-gray-100 px-3 py-2 rounded">
-                            <span></span>
-                            <span></span>
-                            <span></span>
+            </div>
+
+            <div id="stickyBar" class="fixed top-0 left-0 right-0 z-50 bg-white shadow-lg transform -translate-y-full transition-all duration-300">
+                <div class="max-w-7xl mx-auto p-4">
+                    <div class="relative">
+                        <input type="text" placeholder="Buscar no cardápio" class="w-full pl-10 pr-4 py-3 rounded-xl border outline-none">
+
+                        <svg class="absolute left-3 top-3.5 w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+
+                    <div class="flex gap-2 overflow-x-auto mt-3">
+                        <button class="bg-gray-900 text-white px-4 py-2 rounded-lg whitespace-nowrap">
+                            Entrada
                         </button>
-                        <div class="flex gap-2 overflow-x-auto text-xs">
-                            <button class="bg-zinc-800 text-white px-3 py-2 rounded whitespace-nowrap">Entrada</button>
-                            <button class="px-3 py-2 whitespace-nowrap">Principal</button>
-                            <button class="px-3 py-2 whitespace-nowrap">Bebidas</button>
-                            <button class="px-3 py-2 whitespace-nowrap">Sobremesas</button>
-                            <button class="px-3 py-2 whitespace-nowrap">Água</button>
-                        </div>
+
+                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                            Principal
+                        </button>
+
+                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                            Bebidas
+                        </button>
+
+                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                            Sobremesas
+                        </button>
                     </div>
                 </div>
-                <ul class="hidden">
-                    <li><button>Entrada</button></li>
-                    <li><button>Principal</button></li>
-                    <li><button>Bebidas</button></li>
-                    <li><button>Sobremesas</button></li>
-                    <li><button>Água</button></li>
-                </ul>
-            </section>
+            </div>
+
+            <div id="menuBar" class="bg-white shadow-sm">
+                <div class="p-4">
+                    <div class="flex gap-2 overflow-x-auto">
+                        <button class="bg-gray-900 text-white px-4 py-2 rounded-lg whitespace-nowrap">
+                            Entrada
+                        </button>
+
+                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                            Principal
+                        </button>
+
+                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                            Bebidas
+                        </button>
+
+                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
+                            Sobremesas
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-4">
+                <span class="bg-blue-500 text-white px-3 py-1 rounded-lg">
+                    Mesa 20
+                </span>
+            </div>
+
+            <div class="p-4 grid lg:grid-cols-3 gap-4">
+                <div class="lg:col-span-2">
+                    <h2 class="text-2xl font-bold mb-4">
+                        Entrada
+                    </h2>
+
+                    <div class="space-y-4">
+                        <div class="bg-white rounded-xl p-4 flex justify-between items-center">
+                            <div>
+                                <h3 class="font-bold text-lg">
+                                    Pizza Portuguesa
+                                </h3>
+
+                                <p class="text-gray-500 text-sm mt-1">
+                                    Molho de tomate, queijo,
+                                    presunto, ovos e cebola.
+                                </p>
+
+                                <p class="font-bold text-xl mt-3">
+                                    R$ 50,90
+                                </p>
+                            </div>
+                            <img src="img/download.jpg" alt="Pizza Portuguesa" class="w-24 h-24 rounded-lg object-cover">
+                        </div>
+
+                        <div class="bg-white rounded-xl h-28"></div>
+                        <div class="bg-white rounded-xl h-28"></div>
+                        <div class="bg-white rounded-xl h-28"></div>
+                        <div class="bg-white rounded-xl h-28"></div>
+                        <div class="bg-white rounded-xl h-28"></div>
+                        <div class="bg-white rounded-xl h-28"></div>
+                        <div class="bg-white rounded-xl h-28"></div>
+                        <div class="bg-white rounded-xl h-28"></div>
+                    </div>
+                </div>
+
+                <aside class="hidden lg:block bg-white rounded-xl p-4">
+                    <h2 class="font-bold text-lg mb-4">
+                        Seu Pedido
+                    </h2>
+                    <div class="h-[500px] bg-gray-100 rounded-xl"></div>
+                </aside>
+            </div>
         </div>
     </body>
 </html>
