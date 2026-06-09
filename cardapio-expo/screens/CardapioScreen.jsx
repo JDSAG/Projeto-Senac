@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { ReceiptCards } from "../components/adminCards";
 import DisponivelBtn from "../components/disponivelBtn";
 
+//Mudar o cardápio no backend, qnd apertar o botão de indisponivel n poder fazer o pedido do item.
 const cardapio = [
   { id: 1, nome: "X-Burguer", descricao: "Hambúrguer com queijo", preco: "25.00" },
   { id: 2, nome: "Frango Grelhado", descricao: "Prato do dia", preco: "32.00" },
@@ -21,14 +22,16 @@ export default function CardapioScreen() {
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titulo}>Gerenciamento do Cardápio</Text>
       {cardapio.map((item) => (
-        <View key={item.id} style={{ opacity: disponivel[item.id] ? 1 : 0.4 }}>
-          <ReceiptCards item={item}/>
-          <DisponivelBtn
-            ativo={disponivel[item.id]}
-            onToggle={() => toggleDisponivel(item.id)}
-          />
-        </View>
-      ))}
+        <View key={item.id}>
+      <View style={{ opacity: disponivel[item.id] ? 1 : 0.4 }}>
+      <ReceiptCards item={item} />
+      </View>
+      <DisponivelBtn
+      ativo={disponivel[item.id]}
+      onToggle={() => toggleDisponivel(item.id)}
+    />
+</View>
+))}
     </ScrollView>
   );
 }

@@ -7,7 +7,6 @@ export default function DisponivelBtn({ ativo: ativoProp, onToggle }) {
   const controlled = ativoProp !== undefined;
   const ativo = controlled ? ativoProp : ativoLocal;
   const handlePress = controlled ? onToggle : () => setAtivoLocal((v) => !v);
-
   return (
     <TouchableOpacity
       onPress={handlePress}
