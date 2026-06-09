@@ -1,13 +1,18 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
+import DelAndConcluirBtn from "./concluirEdeletarBtn";
 
-export function OrderCards({ item }) {
+export function OrderCards({ item, onConcluir, onExcluir }) {
   return (
     <View style={styles.card}>
       <Text style={styles.nome}>{item.nome}</Text>
       <Text style={styles.descricao}>{item.pedido}</Text>
       <Text style={styles.preco}>R$ {item.total}</Text>
       <Text>Mesa: {item.mesa}</Text>
+      <DelAndConcluirBtn
+        onConcluir={() => onConcluir(item)}
+        onExcluir={() => onExcluir(item)}
+      />
     </View>
   );
 }
