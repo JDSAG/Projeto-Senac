@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Projeto Cardápio</title>
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="styles.css">
 
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
@@ -12,8 +12,8 @@
         <!--Container principal-->
         <div class="max-w-7xl mx-auto min-h-screen bg-gray-200">
             <!--Banner-->
-            <div id="banner" class="relative h-56 overflow-hidden">
-                <img src="img/download (1).jpg" alt="Banner" class="w-full h-full object-cover">
+            <div id="banner" class="relative h-56 lg:h-96 overflow-hidden">
+                <img src="img/img-banner.jpg" alt="Banner" class="w-full h-full object-cover">
 
                 <div class="absolute inset-0 bg-black/20"></div>
 
@@ -40,53 +40,66 @@
                         </svg>
                     </div>
 
-                    <div class="flex gap-2 overflow-x-auto mt-3">
-                        <button class="bg-gray-900 text-white px-4 py-2 rounded-lg whitespace-nowrap">
-                            Entrada
-                        </button>
+                    <nav class="overflow-x-auto scrollbar-hide touch-pan-x">
+                        <div class="flex gap-8 min-w-max px-4 py-2">
+                            <a href="#entrada" class="categoria ativa">
+                                Entradas
+                            </a>
 
-                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Principal
-                        </button>
+                            <a href="#principal" class="categoria">
+                                Principal
+                            </a>
 
-                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Bebidas
-                        </button>
+                            <a href="#salada" class="categoria">
+                                Salada
+                            </a>
 
-                        <button class="bg-gray-100 px-4 rounded-lg whitespace-nowrap">
-                            Massa
-                        </button>
+                            <a href="#bebida" class="categoria">
+                                Bebidas
+                            </a>
 
-                        <button class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Sobremesas
-                        </button>
-                    </div>
+                            <a href="#massa" class="categoria">
+                                Massas
+                            </a>
+
+                            <a href="#sobremesa" class="categoria">
+                                Sobremesas
+                            </a>
+                        </div>
+                    </nav>
                 </div>
             </div>
 
             <!--Menu de categorias-->
             <div id="menuBar" class="bg-white shadow-sm">
                 <div class="p-4">
-                    <div class="flex gap-2 overflow-x-auto">
-                        <a href="#entrada" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Entrada
-                        </a>
-                        <a href="#principal" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Principal
-                        </a>
+                    <nav class="flex items-center gap-8 px-4 overflow-x-auto whitespace-nowrap scrollbar-hide mt-3">
+                        <div class="flex min-w-max">
+                            <a href="#entrada" class="categoria ativa">
+                                Entradas
+                            </a>
 
-                        <a href="#bebidas" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Bebidas
-                        </a>
+                            <a href="#principal" class="categoria">
+                                Principal
+                            </a>
 
-                        <a href="#massa" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Massa
-                        </a>
+                            <a href="#salada" class="categoria">
+                                Salada
+                            </a>
 
-                        <a href="#sobremesas" class="bg-gray-100 px-4 py-2 rounded-lg whitespace-nowrap">
-                            Sobremesas
-                        </a>
-                    </div>
+                            <a href="#bebida" class="categoria">
+                                Bebidas
+                            </a>
+
+                            <a href="#massa" class="categoria">
+                                Massas
+                            </a>
+
+                            <a href="#sobremesa" class="categoria">
+                                Sobremesas
+                            </a>
+                        </div>
+                    </nav>
                 </div>
             </div>
 
@@ -98,222 +111,389 @@
             </div>
 
             <!--Conteúdo principal-->
-            <div class="p-4 grid lg:grid-cols-3 gap-4">
-                <div class="lg:col-span-2">
-                    <section id="entrada" class="mb-10">
-                        <h2 class="text-2xl font-bold mb-4">
-                            Entrada
+            <main class="p-4">
+                <div class="p-4 grid lg:grid-cols-3 gap-4">
+                    <div class="lg:col-span-2">
+                        <section class="mb-10">
+                            <div class="flex flex-col gap-4 p-4 bg-gray-100 rounded-2xl">
+                                <h2 id="entrada" class="text-2xl font-bold mb-4">
+                                    Entrada
+                                </h2>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Coquetel de camarão"
+                                data-description="O Coquetel de camarão (ou shrimp cocktail) é uma clássica entrada ou aperitivo servido gelado, que consiste em camarões cozidos ou grelhados combinados com um molho cremoso (geralmente molho rosé, cocktail ou Marie Rose). Ele é tradicionalmente montado e servido de forma elegante dentro de taças de vidro."
+                                data-price="R$ 54,90" data-image="img/Coquetel-de-camarao.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Coquetel de camarão
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            O Coquetel de camarão (ou shrimp cocktail) é uma clássica entrada ou aperitivo servido gelado.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 54,90
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Coquetel-de-camarao.webp" alt="Coquetel de camarão" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Brusqueta"
+                                data-description="Bruschetta (pronuncia-se brusqueta) é um antepasto tradicional da culinária italiana, originário da região da Toscana. Consiste em uma fatia de pão rústico (geralmente pão italiano) tostada ou grelhada, esfregada com alho cru e regada com azeite de oliva e sal."
+                                data-price="R$ 58,90" data-image="img/Brusqueta.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Brusqueta
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Bruschetta é um antepasto tradicional da culinária italiana, originário da Toscana.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 58,90
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Brusqueta.webp" alt="Brusqueta" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Carpaccio de salmão defumado"
+                                data-description="O carpaccio de salmão defumado é uma entrada sofisticada, leve e refrescante, originária da culinária italiana. Trata-se de filés de salmão defumado cortados em fatias extremamente finas, servidos frios ou gelados, acompanhados de azeite, limão, alcaparras, cebola roxa e ervas."
+                                data-price="R$ 60,90" data-image="img/Carpaccio-de-salmao-defumado.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Carpaccio de salmão defumado
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Entrada sofisticada feita com finas fatias de salmão defumado servidas frias.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 60,90
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Carpaccio-de-salmao-defumado.webp" alt="Carpaccio de salmão defumado" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Guacamole"
+                                data-description="O guacamole é um molho ou pasta tradicional da culinária mexicana, feito à base de abacate amassado. De origem asteca, seu nome vem da palavra em nahuatl ahuacamolli (união de ahuacatl, abacate, com molli, molho)."
+                                data-price="R$ 79,90" data-image="img/Guacamole.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Guacamole
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Molho tradicional mexicano feito à base de abacate amassado.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 79,90
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Guacamole.webp" alt="Guacamole" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="mb-10">
+                            <div class="flex flex-col gap-4 p-4 bg-gray-100 rounded-2xl">
+                                <h2 id="principal" class="text-2xl font-bold mb-4">
+                                    Principal
+                                </h2>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Paillard de filet"
+                                data-description="O Paillard de Filé (ou paillard de filé mignon) é uma técnica culinária francesa em que um corte de carne, como o filé mignon, é batido suavemente até se tornar um bife muito fino e largo. Devido à sua espessura fina, a carne cozinha extremamente rápido e fica muito macia."
+                                data-price="R$ 60,00" data-image="img/Paillard-de-filet.jpg">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Paillard de filet
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            O Paillard de Filé é uma técnica culinária francesa em que um corte de carne é batido até se tornar um bife fino e macio.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 60,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Paillard-de-filet.jpg" alt="Paillard de filet" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-6 cursor-pointer" data-title="Risoto de cogumelos com ancho"
+                                data-description="O risoto de cogumelos com bife ancho é um prato sofisticado que combina a cremosidade do clássico risoto italiano com a suculência e o sabor marcante de um corte nobre de carne bovina."
+                                data-price="R$ 90,00" data-image="img/Risoto-de-cogumelos-com-ancho.jpg">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Risoto de cogumelos com ancho
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Prato sofisticado que combina a cremosidade do risoto italiano com a suculência do bife ancho.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 90,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Risoto-de-cogumelos-com-ancho.jpg" alt="Risoto de cogumelos com ancho" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="mb-10">
+                            <div class="flex flex-col gap-4 p-4 bg-gray-100 rounded-2xl">
+                                <h2 id="salada" class="text-2xl font-bold mb-4">
+                                    Salada
+                                </h2>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Salada proteica" 
+                                data-description="Uma salada proteica é uma refeição completa que vai além das folhas: ela combina vegetais com uma grande fonte de proteína (animal ou vegetal) para virar o prato principal."
+                                data-price="R$ 48,00" data-image="img/Salada-proteica.jpg">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Salada proteica
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Uma salada proteica é uma refeição completa que vai além das folhas: ela combina vegetais
+                                            com uma grande fonte de proteína (animal ou vegetal) para virar o prato principal.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 48,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Salada-proteica.jpg" alt="Salada proteica" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-6 cursor-pointer" data-title="Salada de repolho com gergelim e shoyu"
+                                data-description="A salada de repolho com gergelim e shoyu, também conhecida como salada oriental ou Sunomono de Repolho, é um acompanhamento leve e refrescante, muito comum na culinária asiática."
+                                data-price="R$ 25,00" data-image="img/Salada-de-repolho-com-gergelim-e-shoyu.jpg">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Salada de repolho com gergelim e shoyu
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            A salada de repolho com gergelim e shoyu, também conhecida como salada oriental ou Sunomono de Repolho.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 25,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Salada-de-repolho-com-gergelim-e-shoyu.jpg" alt="Salada de repolho com gergelim e shoyu" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="mb-10">
+                            <div class="flex flex-col gap-4 p-4 bg-gray-100 rounded-2xl">
+                                <h2 id="bebida" class="text-2xl font-bold mb-4">
+                                    Bebidas
+                                </h2>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Aperol Spritz"
+                                data-description="Aperol Spritz é um dos coquetéis mais famosos do mundo. De origem italiana, ele é conhecido por sua cor laranja vibrante, sabor refrescante (levemente cítrico e amargo) e baixo teor alcoólico. É preparado com Aperol, espumante Prosecco e água com gás, servido com gelo e uma fatia de laranja."
+                                data-price="R$ 45,00" data-image="img/Aperol-spritz.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Aperol Spritz
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Coquetel italiano refrescante com Aperol, Prosecco e água com gás.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 45,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Aperol-spritz.webp" alt="Aperol Spritz" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-6 cursor-pointer" data-title="Las Perdices Rosé"
+                                data-description="O Las Perdices Rosé é um vinho rosé argentino produzido pela renomada vinícola Viña Las Perdices, localizada em Mendoza, aos pés da Cordilheira dos Andes. Elaborado 100% com a uva Malbec, destaca-se pelo frescor, aromas de frutas vermelhas e excelente versatilidade para harmonizações."
+                                data-price="R$ 130,00"data-image="img/Las-Perdices-Rose.png" >
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Las Perdices Rosé
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Vinho rosé argentino elaborado com uvas Malbec, fresco e aromático.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 130,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Las-Perdices-Rose.png" alt="Las Perdices Rosé" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+                            </div>
+                        </section>
+
+                         <section class="mb-10">
+                            <div class="flex flex-col gap-4 p-4 bg-gray-100 rounded-2xl">
+                                <h2 id="massa" class="text-2xl font-bold mb-4">
+                                    Massas
+                                </h2>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Ravioli"
+                                data-description="Ravioli é um tipo de massa recheada tradicional da culinária italiana, geralmente feita de massa fresca. Ela consiste em duas finas camadas de massa dobradas e cortadas, que envolvem um recheio de carne, queijo, vegetais ou peixe, sendo depois cozidas e servidas com molho."
+                                data-price="R$ 65,00" data-image="img/Ravioli.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Ravioli
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Massa italiana recheada com diversas opções de ingredientes e servida com molho.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 65,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Ravioli.webp" alt="Ravioli" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-6 cursor-pointer" data-title="Macarrão ao molho branco"
+                                data-description="Macarrão ao molho branco é um prato clássico da culinária italiana preparado com massa cozida e coberta por um molho cremoso à base de leite, manteiga, farinha de trigo e queijo. É uma opção saborosa e muito apreciada por sua textura cremosa e sabor suave."
+                                data-price="R$ 35,00" data-image="img/Macarrao-ao-molho-branco.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Macarrão ao molho branco
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Massa servida com um molho cremoso preparado à base de leite, manteiga e queijo.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 35,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Macarrao-ao-molho-branco.webp" alt="Macarrão ao molho branco" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="mb-10">
+                            <div class="flex flex-col gap-4 p-4 bg-gray-100 rounded-2xl">
+                                <h2 id="sobremesa" class="text-2xl font-bold mb-4">
+                                    Sobremesas
+                                </h2>
+                                
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-4 cursor-pointer" data-title="Pudim de chocolate branco com frutas vermelhas"
+                                data-description="O pudim de chocolate branco com frutas vermelhas é uma sobremesa sofisticada e elegante que combina a base cremosa e doce do chocolate branco com a acidez refrescante de uma calda ou geleia de frutas vermelhas, como morango, mirtilo, amora e framboesa."
+                                data-price="R$ 35,00" data-image="img/Pudim-de-chocolate-branco-com-frutas-vermelhas.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Pudim de chocolate branco com frutas vermelhas
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Sobremesa cremosa que combina o sabor suave do chocolate branco com frutas vermelhas.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 35,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Pudim-de-chocolate-branco-com-frutas-vermelhas.webp" alt="Pudim de chocolate branco com frutas vermelhas" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+
+                                <div class="product-card bg-white rounded-xl p-4 flex justify-between items-center mb-6 cursor-pointer" data-title="Cheesecake de morango"
+                                data-description="O cheesecake de morango é uma sobremesa clássica composta por uma base crocante de biscoito, um recheio cremoso à base de cream cheese e uma cobertura de morangos frescos ou calda de morango. É conhecido pelo equilíbrio entre o doce e o levemente ácido."
+                                data-price="R$ 25,00" data-image="img/Cheesecake-de-morango.webp">
+                                    <div>
+                                        <h3 class="font-bold text-lg">
+                                            Cheesecake de morango
+                                        </h3>
+
+                                        <p class="text-gray-500 text-sm mt-1">
+                                            Sobremesa cremosa com base crocante e cobertura de morangos frescos.
+                                        </p>
+
+                                        <p class="font-bold text-xl mt-3">
+                                            R$ 25,00
+                                        </p>
+                                    </div>
+
+                                    <img src="img/Cheesecake-de-morango.webp" alt="Cheesecake de morango" class="w-24 h-24 rounded-lg object-cover">
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+
+                    <!--Modal (popup)-->
+                    <div id="productModal" class="hidden fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+                        <div class="bg-white rounded-xl max-w-2xl w-full overflow-hidden relative">
+                            <!-- Fechar -->
+                            <button id="closeModal" class="absolute top-4 right-4 bg-white rounded-full w-10 h-10 text-xl shadow">
+                                X
+                            </button>
+
+                            <!-- Imagem -->
+                            <img id="modalImage" src="" alt="" class="w-full h-80 object-cover">
+
+                            <!-- Conteúdo -->
+                            <div class="p-6">
+                                <h2 id="modalTitle"
+                                    class="text-2xl font-bold mb-3">
+                                </h2>
+
+                                <p id="modalDescription" class="text-gray-600 mb-4">
+                                </p>
+
+                                <p id="modalPrice" class="text-2xl font-bold mb-6">
+                                </p>
+
+                                <div class="grid grid-cols-2 gap-3">
+                                    <button id="addToCart" class="bg-gray-200 text-black py-4 rounded-xl font-semibold hover:bg-gray-300 transition">
+                                        Adicionar ao Carrinho
+                                    </button>
+
+                                    <button id="buyNow" class="bg-black text-white py-4 rounded-xl font-semibold hover:bg-gray-800 transition">
+                                        Comprar Agora
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Área do pedido (desktop)-->
+                    <aside class="hidden lg:block bg-white rounded-xl p-4">
+                        <h2 class="font-bold text-lg mb-4">
+                            Seu Pedido
                         </h2>
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Coquetel de camarão
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    O coquetel de camarão é uma entrada clássica e refrescante, 
-                                    muito popular nos anos 80 e que continua atemporal. 
-                                    Ele consiste em camarões cozidos e resfriados, servidos sobre 
-                                    um molho cremoso à base de maionese, ketchup e conhaque (molho rosé)
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 54,90
-                                </p>
-                            </div>
-
-                            <img src="img/coquetel-de-camarao-730x546.jpeg.webp" alt="Coquetel de camarão" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Brusqueta
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    Uma brusqueta tradicional, é um antepasto clássico italiano que 
-                                    consiste em uma fatia de pão tostado coberta com azeite, 
-                                    alho e ingredientes frescos ou refogados 
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 58,90
-                                </p>
-                            </div>
-
-                            <img src="img/brusqueta-730x548.jpeg.webp" alt="Brusqueta" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Carpaccio de salmão defumado
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    É uma entrada leve e sofisticada que consiste em finíssimas 
-                                    fatias de salmão submetidas ao processo de defumação.
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 60,90
-                                </p>
-                            </div>
-
-                            <img src="img/carpaccio-de-salmao-defumado-730x548.jpg.webp" alt="Carpaccio de salmão defumado" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Guacamole
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    O guacamole é um molho ou pasta tradicional da culinária mexicana, 
-                                    feito à base de abacate amassado. De origem asteca, 
-                                    seu nome vem da palavra em nahuatl ahuacamolli (união de ahuacatl, abacate, com molli, molho). 
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 79,90
-                                </p>
-                            </div>
-
-                            <img src="img/guacamole-capa-730x548.png.webp" alt="Guacamole" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-                    </section>
-
-                    <section id="principal" class="mb-10">
-                        <h2 class="text-2xl font-bold mb-4">
-                            Principal
-                        </h2>
-
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-4">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Coquetel de camarão
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    O coquetel de camarão é uma entrada clássica e refrescante, 
-                                    muito popular nos anos 80 e que continua atemporal. 
-                                    Ele consiste em camarões cozidos e resfriados, servidos sobre 
-                                    um molho cremoso à base de maionese, ketchup e conhaque (molho rosé)
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 54,90
-                                </p>
-                            </div>
-
-                            <img src="img/coquetel-de-camarao-730x546.jpeg.webp" alt="Coquetel de camarão" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-6">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Brusqueta
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    Uma brusqueta tradicional, é um antepasto clássico italiano que 
-                                    consiste em uma fatia de pão tostado coberta com azeite, 
-                                    alho e ingredientes frescos ou refogados 
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 58,90
-                                </p>
-                            </div>
-
-                            <img src="img/brusqueta-730x548.jpeg.webp" alt="Brusqueta" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-6">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Carpaccio de salmão defumado
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    É uma entrada leve e sofisticada que consiste em finíssimas 
-                                    fatias de salmão submetidas ao processo de defumação.
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 60,90
-                                </p>
-                            </div>
-
-                            <img src="img/carpaccio-de-salmao-defumado-730x548.jpg.webp" alt="Carpaccio de salmão defumado" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-                        <div class="bg-white rounded-xl p-4 flex justify-between items-center mb-6">
-                            <div>
-                                <h3 class="font-bold text-lg">
-                                    Guacamole
-                                </h3>
-
-                                <p class="text-gray-500 text-sm mt-1">
-                                    O guacamole é um molho ou pasta tradicional da culinária mexicana, 
-                                    feito à base de abacate amassado. De origem asteca, 
-                                    seu nome vem da palavra em nahuatl ahuacamolli (união de ahuacatl, abacate, com molli, molho). 
-                                </p>
-
-                                <p class="font-bold text-xl mt-3">
-                                    R$ 79,90
-                                </p>
-                            </div>
-
-                            <img src="img/guacamole-capa-730x548.png.webp" alt="Guacamole" class="w-24 h-24 rounded-lg object-cover">
-                        </div>
-                    </section>
-
-                    <section id="bebidas" class="mb-10">
-                        <h2 class="text-2xl font-bold mb-4">
-                            Bebidas
-                        </h2>
-                        <div class="bg-white rounded-xl p-4">
-                            Bebidas aqui
-                        </div>
-                    </section>
-
-                    <section id="sobremesas" class="mb-10">
-                        <h2 class="text-2xl font-bold mb-4">
-                            Sobremesas
-                        </h2>
-
-                        <div class="bg-white rounded-xl p-4">
-                            Sobremesas aqui
-                        </div>
-                    </section>
+                        <div class="h-[500px] bg-gray-100 rounded-xl"></div>
+                    </aside>
                 </div>
-
-                <!--Área do pedido (desktop)-->
-                <aside class="hidden lg:block bg-white rounded-xl p-4">
-                    <h2 class="font-bold text-lg mb-4">
-                        Seu Pedido
-                    </h2>
-                    <div class="h-[500px] bg-gray-100 rounded-xl"></div>
-                </aside>
             </div>
-        </div>
+        </main>
 
-        <script>
-            const banner = document.getElementById('banner');
-            const stickyBar = document.getElementById('stickyBar');
+        <footer>
+        </footer>
 
-            window.addEventListener('scroll', () => {
-
-                const bannerHeight = banner.offsetHeight;
-
-                if (window.scrollY > bannerHeight - 80) {
-                    stickyBar.classList.remove('-translate-y-full');
-                    stickyBar.classList.add('translate-y-0');
-                } else {
-                    stickyBar.classList.add('-translate-y-full');
-                    stickyBar.classList.remove('translate-y-0');
-                }
-
-            });
-        </script>
+        <script src="script.js"></script>
     </body>
 </html>
