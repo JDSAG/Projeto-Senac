@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, StyleSheet, ScrollView, Alert } from "react-native";
+import { Text, StyleSheet, ScrollView, Alert} from "react-native";
 import { OrderCards } from "../components/adminCards";
 
 //Isso aqui é só um dado estático, vai ser tirado no futuro
