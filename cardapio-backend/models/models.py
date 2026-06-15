@@ -13,7 +13,6 @@ class Mesa(Base):
     
     pedidos = relationship("Pedido", back_populates="mesa")
 
-
 class Cardapio(Base):
     __tablename__ = "cardapio"
     id = Column(Integer, primary_key=True)
