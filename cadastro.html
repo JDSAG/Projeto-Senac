@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Cadastro</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 min-h-screen flex items-center justify-center">
+        <div class="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg">
+            <h1 class="text-3xl font-bold text-center mb-6">
+                Criar conta
+            </h1>
+
+            <form id="cadastroForm">
+                <!-- Nome -->
+                <div class="mb-4">
+                    <label class="block mb-2 font-medium">
+                        Nome
+                    </label>
+
+                    <input id="nome" type="text" placeholder="Digite seu nome" class="w-full border p-3 rounded-xl outline-none" required>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-4">
+                    <label class="block mb-2 font-medium">
+                        Email
+                    </label>
+                    
+                    <input id="email" type="email" placeholder="Digite seu email" class="w-full border p-3 rounded-xl outline-none" required>
+                </div>
+
+                <!-- Senha -->
+                <div class="mb-4">
+                    <label class="block mb-2 font-medium">
+                        Senha
+                    </label>
+
+                    <input id="senha" type="password" placeholder="Mínimo 6 caracteres" class="w-full border p-3 rounded-xl outline-none" required>
+                </div>
+
+                <!-- Confirmar senha -->
+                <div class="mb-4">
+                    <label class="block mb-2 font-medium">
+                        Confirmar senha
+                    </label>
+
+                    <input id="confirmarSenha" type="password" placeholder="Confirme sua senha" class="w-full border p-3 rounded-xl outline-none" required>
+                </div>
+                
+                <p id="mensagem" class="mb-4"></p>
+
+                <button type="submit" class="w-full bg-black text-white py-3 rounded-xl hover:bg-gray-800">
+                    Cadastrar
+                </button>
+            </form>
+        </div>
+        <script src="js/cadastro.js"></script>
+    </body>
+</html>
