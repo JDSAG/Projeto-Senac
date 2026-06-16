@@ -21,7 +21,18 @@ class Cardapio(Base):
     preco = Column(Float,nullable=False)
     categoria = Column(String,nullable=False) 
     ativo = Column(Boolean,default=True)
-
+    
+    def to_dict(self):
+        return{
+            "id":self.id,
+            "nome":self.nome,
+            "descricao":self.descricao,
+            "preco":self.preco,
+            "categoria":self.categoria,
+            "ativo":self.ativo
+        }
+    
+    
 class Pedido(Base):
     __tablename__ = "pedidos"
     id = Column(Integer, primary_key=True)
