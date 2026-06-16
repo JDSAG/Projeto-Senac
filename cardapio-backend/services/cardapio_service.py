@@ -7,12 +7,9 @@ from database.database import SessionLocal
 
 class CardapioService():
     session = SessionLocal()
-    
-    
-    
-    
+
     @classmethod
-    def toggle_disponibilidade(cls, item_id: int):
+    def toggle_disponibilidade(cls, item_id:int):
         try:
             item = cls.session.query(Cardapio).filter(Cardapio.id == item_id).first()
             if not item:
@@ -23,3 +20,11 @@ class CardapioService():
         except Exception as e:
             cls.session.rollback()
             raise e
+    
+    @classmethod 
+    def find_cardapio(cls):
+        itens = cls.session.query(Cardapio).all()
+        result = []
+        for e in itens:
+            result.append(e.to_dict())
+        return result
