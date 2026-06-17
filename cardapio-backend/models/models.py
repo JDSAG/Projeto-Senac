@@ -12,6 +12,13 @@ class Mesa(Base):
     status = Column(String, nullable=False) #Caso ocupado, tals
     
     pedidos = relationship("Pedido", back_populates="mesa")
+    
+    def to_dict(self):
+        return{
+            "id":self.id,
+            "numero":self.numero,
+            "status":self.status
+        }
 
 class Cardapio(Base):
     __tablename__ = "cardapio"
@@ -19,7 +26,7 @@ class Cardapio(Base):
     nome = Column(String, nullable=False)
     descricao = Column(String,nullable=False)
     preco = Column(Float,nullable=False)
-    categoria = Column(String,nullable=False) 
+    categoria = Column(String,nullable=False)  
     ativo = Column(Boolean,default=True)
     
     def to_dict(self):
@@ -43,6 +50,14 @@ class Pedido(Base):
     mesa = relationship("Mesa",back_populates="pedidos")
     itens = relationship("ItemPedido",back_populates="pedido")
     
+    def to_dict(self):
+        return{
+            "id":self.id,
+            "nome_cliente":self.nome_cliente,
+            "mesa_id":self.mesa_id,
+            "status":self.status
+        }
+    
 class ItemPedido(Base):
     __tablename__ = "itens_pedido"
     id = Column(Integer, primary_key=True)
@@ -53,3 +68,12 @@ class ItemPedido(Base):
     
     pedido = relationship("Pedido",back_populates="itens")
     produto = relationship("Cardapio")
+    
+    def to_dict(self):
+        return{
+            "id":self.id,
+            "pedido_id":self.pedido_id,
+            "produto_id":self.produto_id,
+            "quantidade":self.quantidade,
+            "subtotal":self.subtotal
+        }

@@ -8,19 +8,23 @@ import BASE_URL from "../services/api";
 export default function CardapioScreen() {
   const [cardapio,setCardapio] = useState([])
   const [loading, setLoading] = useState(true)
-
-  useEffect(() =>{fetch(`${BASE_URL}/cardapio`)
+  const [disponivel, setDisponivel] = useState({});
+  useEffect(() => {
+  fetch(`${BASE_URL}/cardapio`)
     .then(res => res.json())
     .then(data => {
-      setCardapio(data)
-      setLoading(false)
-    })
+      setCardapio(data);
+
+      const estados = Object.fromEntries(
+        data.map(item => [item.id, item.ativo])
+      );
+
+      setDisponivel(estados);
+      setLoading(false);
+    });
 }, []);
+  
 
-
-  const [disponivel, setDisponivel] = useState(
-    Object.fromEntries(cardapio.map((item) => [item.id, true]))
-  );
 
   function toggleDisponivel(id) {
     setDisponivel((prev) => ({ ...prev, [id]: !prev[id] }));
