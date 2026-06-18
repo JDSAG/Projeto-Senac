@@ -1,34 +1,67 @@
-import React, { useState } from "react";
-import { Text, StyleSheet, ScrollView, Alert} from "react-native";
+import React, { useEffect, useState } from "react";
+import { Text, StyleSheet, ScrollView, Alert,ActivityIndicator} from "react-native";
 import { OrderCards } from "../components/adminCards";
 
-//Isso aqui é só um dado estático, vai ser tirado no futuro
-const pedidosIniciais = [
-  { id: 1, nome: "João", pedido: "X-Burguer", total: "25.00", mesa: 3 },
-  { id: 2, nome: "Maria", pedido: "Frango Grelhado", total: "32.00", mesa: 5 },
-];
+
+const apiURL = process.env.EXPO_PUBLIC_BASE_URL;
 
 export default function PedidosScreen() {
   //Em um projeto real isso aqui seria useState([])
-  const [pedidos, setPedidos] = useState(pedidosIniciais);
-  
-  const concluirPedido = (item) => {
-    Alert.alert(
-      "Pedido concluído",
-      `Pedido da mesa ${item.mesa} foi concluído!`,
-      [
-        {
-          text: "OK",
-          onPress: () =>
-            setPedidos((prev) => prev.filter((p) => p.id !== item.id)),
-        },
-      ]
-    );
+  const [pedidos, setPedidos] = useState([]);
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() =>
+  {
+    buscarPedidos();
+  }, [])
+
+  const buscarPedidos = async () => 
+  {try{
+    const response = await fetch(`${apiURL}/pedido/`)
+    const data = await response.json();
+    setPedidos(data);
+  }catch (error) {
+      Alert.alert("Erro", "Não foi possível carregar os pedidos.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const excluirPedido = (item) => {
-    setPedidos((prev) => prev.filter((p) => p.id !== item.id));
+  const concluirPedido = async (item) => {
+    try {
+      const response = await fetch(`${API_URL}/pedido/${item.id}/concluir`, {
+        method: "PATCH",
+      });
+
+      if (!response.ok) throw new Error();
+      Alert.alert(
+        "Pedido concluído",
+        `Pedido da mesa ${item.mesa} foi concluído!`,
+        [{ text: "OK", onPress: () => setPedidos((prev) => prev.filter((p) => p.id !== item.id)) }]
+      );
+    } catch {
+      Alert.alert("Erro", "Não foi possível concluir o pedido.");
+    }
   };
+
+  // 3. Idem para excluir
+  const excluirPedido = async (item) => {
+    try {
+      const response = await fetch(`${API_URL}/pedido/${item.id}/excluir`, {
+        method: "PATCH",
+      });
+
+      if (!response.ok) throw new Error();
+
+      setPedidos((prev) => prev.filter((p) => p.id !== item.id));
+    } catch {
+      Alert.alert("Erro", "Não foi possível excluir o pedido.");
+    }
+  };
+
+  if (loading) {
+    return <ActivityIndicator style={{ flex: 1 }} size="large" />;
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -46,14 +79,6 @@ export default function PedidosScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 20,
-    backgroundColor: "#f0f0f0",
-    flexGrow: 1,
-  },
-  titulo: {
-    fontSize: 22,
-    fontWeight: "bold",
-    marginBottom: 15,
-  },
+  container: { padding: 20, backgroundColor: "#f0f0f0", flexGrow: 1 },
+  titulo: { fontSize: 22, fontWeight: "bold", marginBottom: 15 },
 });

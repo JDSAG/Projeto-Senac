@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import BASE_URL from '../services/api'; 
+
+const apiURL = process.env.EXPO_PUBLIC_BASE_URL;
 
 export default function DisponivelBtn({itemId, ativo: ativoProp, onToggle }) {
   const [ativoLocal, setAtivoLocal] = useState(true);
@@ -9,7 +10,7 @@ export default function DisponivelBtn({itemId, ativo: ativoProp, onToggle }) {
   const ativo = controlled ? ativoProp : ativoLocal;
   const handlePress = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/cardapio/${itemId}/disponibilidade`, {
+      const res = await fetch(`${apiURL}/cardapio/${itemId}/disponibilidade`, {
         method: 'PATCH',
       });
       const data = await res.json();

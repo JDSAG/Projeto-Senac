@@ -2,29 +2,25 @@ import { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { ReceiptCards } from "../components/adminCards";
 import DisponivelBtn from "../components/disponivelBtn";
-import BASE_URL from "../services/api";
-//Mudar o cardápio no backend, qnd apertar o botão de indisponivel n poder fazer o pedido do item.
+
+const apiURL = process.env.EXPO_PUBLIC_BASE_URL;
 
 export default function CardapioScreen() {
   const [cardapio,setCardapio] = useState([])
   const [loading, setLoading] = useState(true)
   const [disponivel, setDisponivel] = useState({});
   useEffect(() => {
-  fetch(`${BASE_URL}/cardapio`)
+  fetch(`${apiURL}/cardapio`)
     .then(res => res.json())
     .then(data => {
       setCardapio(data);
-
       const estados = Object.fromEntries(
         data.map(item => [item.id, item.ativo])
       );
-
       setDisponivel(estados);
       setLoading(false);
     });
 }, []);
-  
-
 
   function toggleDisponivel(id) {
     setDisponivel((prev) => ({ ...prev, [id]: !prev[id] }));

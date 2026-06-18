@@ -7,11 +7,25 @@ class PedidoService():
     
     @classmethod 
     def find_pedido(cls):
-        itens = cls.session.query(Pedido).all()
+        itens = cls.session.query(Pedido).filter(
+            Pedido.status.in_(["pendente", "em_andamento"])
+        ).all()
         result = []
         for e in itens:
             result.append(e.to_dict())
         return result
+    
+    @classmethod
+    def iniciar(cls,id:int):
+        try:
+            pedido = cls.session.query(Pedido).where(Pedido.id == id).one()
+            pedido.status = "em_andamento"
+            cls.session.commit()
+            cls.session.refresh(pedido)
+            return pedido 
+        except Exception as e:
+            print(f"Erro ao iniciar pedido {id}: {e}")
+            return None
     
     @classmethod
     def find_by_id(cls, id:int):
@@ -22,24 +36,25 @@ class PedidoService():
     def concluir(cls,id:int):
         try:
             pedido = cls.session.query(Pedido).where(Pedido.id == id).one()
-            if not pedido:
-                return None
             pedido.status = "Concluido"
             cls.session.commit()
             return pedido
-            
         except Exception as e:
+            print(f"Erro ao concluir pedido {id}: {e}")
             cls.session.rollback()
-            return e
+            return None
         
     @classmethod
-    def excluir(cls, id:int):
+    def excluir(cls, id: int):
         try:
-            cls.session.query(Pedido).where(Pedido.id == id).one()
-            cls.session.execute(delete(Pedido).where(Pedido.id == id))
+            pedido = cls.session.query(Pedido).filter(Pedido.id == id).one()
+            
+            cls.session.query(ItemPedido).filter(ItemPedido.pedido_id == id).delete()
+            
+            cls.session.delete(pedido)
             cls.session.commit()
-            return f"Pedido Removido."
+            return "Pedido Removido."
         except Exception as e:
-            return e
-        
-    
+            print(f"Erro ao remover pedido {id}: {e}")
+            cls.session.rollback()
+            return None
