@@ -51,12 +51,14 @@ class Pedido(Base):
     itens = relationship("ItemPedido",back_populates="pedido")
     
     def to_dict(self):
-        return{
-            "id":self.id,
-            "nome_cliente":self.nome_cliente,
-            "mesa_id":self.mesa_id,
-            "status":self.status
-        }
+        return {
+        "id": self.id,
+        "nome_cliente": self.nome_cliente,
+        "mesa_id": self.mesa_id,
+        "status": self.status,
+        "itens": [item.to_dict() for item in self.itens],
+        "total": sum(item.subtotal for item in self.itens)
+    }
     
 class ItemPedido(Base):
     __tablename__ = "itens_pedido"
@@ -70,10 +72,11 @@ class ItemPedido(Base):
     produto = relationship("Cardapio")
     
     def to_dict(self):
-        return{
-            "id":self.id,
-            "pedido_id":self.pedido_id,
-            "produto_id":self.produto_id,
-            "quantidade":self.quantidade,
-            "subtotal":self.subtotal
-        }
+        return {
+        "id": self.id,
+        "pedido_id": self.pedido_id,
+        "produto_id": self.produto_id,
+        "nome_produto": self.produto.nome,
+        "quantidade": self.quantidade,
+        "subtotal": self.subtotal
+    }

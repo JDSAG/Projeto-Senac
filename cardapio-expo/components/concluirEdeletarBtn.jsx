@@ -1,11 +1,19 @@
 import { View, TouchableOpacity, Text, StyleSheet } from "react-native";
 
-export default function DelAndConcluirBtn({ onConcluir, onExcluir }) {
+export default function DelAndConcluirBtn({ status, onIniciar, onConcluir, onExcluir }) {
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={[styles.btn, styles.concluir]} onPress={onConcluir}>
-        <Text style={styles.texto}>Concluir</Text>
-      </TouchableOpacity>
+      {status === "pendente" && (
+        <TouchableOpacity style={[styles.btn, styles.iniciar]} onPress={onIniciar}>
+          <Text style={styles.texto}>Iniciar</Text>
+        </TouchableOpacity>
+      )}
+
+      {status === "em_andamento" && (
+        <TouchableOpacity style={[styles.btn, styles.concluir]} onPress={onConcluir}>
+          <Text style={styles.texto}>Concluir</Text>
+        </TouchableOpacity>
+      )}
 
       <TouchableOpacity style={[styles.btn, styles.excluir]} onPress={onExcluir}>
         <Text style={styles.texto}>Excluir</Text>
@@ -25,6 +33,9 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
     alignItems: "center",
+  },
+  iniciar: {
+    backgroundColor: "#FFA500",
   },
   concluir: {
     backgroundColor: "#28a745",
