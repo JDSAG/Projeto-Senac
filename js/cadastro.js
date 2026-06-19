@@ -3,7 +3,6 @@ const form = document.querySelector("#cadastroForm");
 form.addEventListener("submit", (e)=>{
     e.preventDefault();
 
-    const nome = document.querySelector("#nome").value.trim();
     const email = document.querySelector("#email").value.trim();
     const senha = document.querySelector("#senha").value;
     const confirmar = document.querySelector("#confirmarSenha").value;
@@ -12,13 +11,6 @@ form.addEventListener("submit", (e)=>{
     //limpa mensagem
 
     mensagem.innerHTML = "";
-
-    // valida nome
-    if(nome.length < 3){
-        mensagem.innerHTML = "O nome deve ter pelo menos 3 caracteres";
-        mensagem.className ="text-red-500";
-        return;
-    }
 
     // valida email
     const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -59,7 +51,6 @@ form.addEventListener("submit", (e)=>{
 
     // cria usuário
     usuarios.push({
-        nome,
         email,
         senha
     });
@@ -71,7 +62,6 @@ form.addEventListener("submit", (e)=>{
 
     setTimeout(()=>{
         localStorage.setItem("logado", "true");
-        localStorage.setItem("usuario", nome);
         window.location.href = "index.html";
     },1500);
 });

@@ -7,7 +7,6 @@
 
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
-
     <body class="bg-gray-100 min-h-screen flex items-center justify-center">
         <div class="bg-white w-full max-w-md p-8 rounded-2xl shadow-lg">
             <h1 class="text-3xl font-bold text-center mb-6">
@@ -38,6 +37,17 @@
                 <button type="submit" class="w-full bg-black text-white py-3 rounded-xl font-semibold hover:bg-gray-800 transition duration-300">
                     Entrar
                 </button>
+
+                <div class="my-4 text-center">
+                    <span class="text-gray-400">
+                        ou
+                    </span>
+                </div>
+
+                <button type="button" id="googleLogin" class="w-full border border-gray-300 py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-100 transition duration-300">
+                    <img src="img/google_icon-icons.com_62736.png" alt="icon-google" class="w-4 h-4 object-contain">
+                    Entrar com Google
+                </button>
             </form>
 
             <p class="text-center mt-5 text-gray-500">
@@ -45,6 +55,6 @@
             </p>
         </div>
 
-        <script src="js/login.js"></script>
+        <script type="module" src="js/login.js"></script>
     </body>
 </html>

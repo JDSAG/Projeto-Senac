@@ -1,16 +1,10 @@
 // BARRA FIXA
-//-----------
-
-// Seleciona o banner e a barra fixa
 const banner = document.getElementById("banner");
 const stickyBar = document.getElementById("stickyBar");
 
-// Monitora o scroll da página
 window.addEventListener("scroll", () => {
-    // Calcula onde termina o banner
     const bannerBottom = banner.offsetTop + banner.offsetHeight;
 
-    // Quando passar do banner, exibe a barra fixa
     if (window.scrollY > bannerBottom) {
         stickyBar.classList.remove("-translate-y-full");
         stickyBar.classList.add("translate-y-0");
@@ -21,138 +15,223 @@ window.addEventListener("scroll", () => {
 });
 
 // SINCRONIZAÇÃO DOS MENUS
-//------------------------
-
-// Seleciona todos os links de categoria
 const categorias = document.querySelectorAll(".categoria");
 
-// Adiciona evento de clique em cada categoria
 categorias.forEach(categoria => {
     categoria.addEventListener("click", () => {
 
-        // Obtém o href da categoria clicada
         const href = categoria.getAttribute("href");
 
-        // Remove a classe ativa de todos os menus
-        categorias.forEach(item => {
-            item.classList.remove("ativa");
-        });
+        categorias.forEach(item => item.classList.remove("ativa"));
 
-        // Adiciona a classe ativa nas categorias que possuem o mesmo href
-        document.querySelectorAll(`.categoria[href="${href}"]`).forEach(item => {
-            item.classList.add("ativa");
-        });
+        document.querySelectorAll(`.categoria[href="${href}"]`)
+            .forEach(item => item.classList.add("ativa"));
     });
 });
 
-// DETECÇÃO AUTOMÁTICA DA SEÇÃO VISÍVEL
-//-------------------------------------
-
-// Seleciona todas as seções do cardápio
+// DETECÇÃO DE SEÇÃO (SCROLL)
 const secoes = document.querySelectorAll("section[id]");
 
-// Observer para detectar qual seção visível
-const observer = new IntersectionObserver(
-    (entries) => {
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
 
-        entries.forEach(entry => {
+        if (entry.isIntersecting) {
 
-            // Quando a seção estiver visível na tela
-            if (entry.isIntersecting) {
+            const id = entry.target.id;
 
-                const id = entry.target.id;
+            categorias.forEach(item => item.classList.remove("ativa"));
 
-                // Remove o destaque de todas as categorias
-                categorias.forEach(item => {
-                    item.classList.remove("ativa");
-                });
-
-                // Destaca a categoria correspondente
-                document.querySelectorAll(`.categoria[href="#${id}"]`).forEach(item => {
-                    item.classList.add("ativa");
-                });
-            }
-        });
-    },
-    {
-        // Considera visível quando 30% da seção aparece
-        threshold: 0.3
-    }
-);
-// Observa todas as seções
-secoes.forEach(secao => {
-    observer.observe(secao);
+            document.querySelectorAll(`.categoria[href="#${id}"]`)
+                .forEach(item => item.classList.add("ativa"));
+        }
+    });
+}, {
+    threshold: 0.3
 });
 
-// MODAL (POPUP) DE DETALHES DO PRODUTO
-//-------------------------------------
+secoes.forEach(secao => observer.observe(secao));
 
-// Elementos principais do modal
+// MODAL
 const modal = document.getElementById("productModal");
 const closeModal = document.getElementById("closeModal");
 
-const addToCart = document.getElementById("addToCart");
-const buyNow = document.getElementById("buyNow");
-
-// Campos que serão preenchidos dinamicamente
 const modalTitle = document.getElementById("modalTitle");
 const modalDescription = document.getElementById("modalDescription");
 const modalPrice = document.getElementById("modalPrice");
 const modalImage = document.getElementById("modalImage");
 
-// Seleciona todos os cards de produtos
 document.querySelectorAll(".product-card").forEach(card => {
-    // Evento de clique em cada card
     card.addEventListener("click", () => {
-        // Atualiza o conteúdo do modal
+
+        quantidade = 1;
+        quantity.textContent = 1;
+
         modalTitle.textContent = card.dataset.title;
         modalDescription.textContent = card.dataset.description;
         modalPrice.textContent = card.dataset.price;
         modalImage.src = card.dataset.image;
-    
-        // Exibe o modal
+
         modal.classList.remove("hidden");
-        // Bloqueia o scroll da página
         document.body.style.overflow = "hidden";
     });
 });
 
-// FUNÇÃO PARA FECHAR O MODAL
-//---------------------------
-
 function fecharModal() {
-    // Esconde o modal
     modal.classList.add("hidden");
-    // Libera novamente o scroll da página
     document.body.style.overflow = "auto";
 }
 
-// BOTÕES DE FECHAMENTO
-//---------------------
-
-// Botão X
 closeModal.addEventListener("click", fecharModal);
 
-// Adicionar ao Carrinho
-addToCart.addEventListener("click", () => {
+modal.addEventListener("click", (e) => {
+    if (e.target === modal) fecharModal();
+});
 
-    alert(`${modalTitle.textContent} adicionado ao carrinho!`);
+// QUANTIDADE
+let quantidade = 1;
+
+const quantity = document.getElementById("quantity");
+const plus = document.getElementById("plus");
+const minus = document.getElementById("minus");
+
+plus.addEventListener("click", () => {
+    quantidade++;
+
+    quantity.textContent = quantidade;
 
 });
 
-// Comprar Agora
-buyNow.addEventListener("click", () => {
-
-    alert(`Comprando: ${modalTitle.textContent}`);
-
-});
-
-// FECHAR AO CLICAR FORA DO MODAL
-//-------------------------------
-
-modal.addEventListener("click", e => {
-    //Fecha apenas se clicar no fundo
-    if (e.target === modal) {
-        fecharModal();
+minus.addEventListener("click", () => {
+    if(quantidade > 1){
+        quantidade--;
+        quantity.textContent = quantidade;
     }
 });
+
+/// BOTÃO COMPRAR AGORA 
+const buyNow = document.getElementById("buyNow");
+
+buyNow.addEventListener("click", () => {
+    const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
+    if (!usuario) {
+        window.location.href = "login.html";
+
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    const item = {
+        title: modalTitle.textContent,
+        description: modalDescription.textContent,
+        price: modalPrice.textContent,
+        image: modalImage.src,
+        quantity: quantidade,
+        usuario: usuario.email
+    };
+
+    const produtoExistente = cart.find(produto => produto.title === item.title);
+
+    if(produtoExistente){
+        produtoExistente.quantity += item.quantity;
+    }else{
+        cart.push(item);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    // fecha modal
+    fecharModal();
+
+    // DESKTOP
+    if(window.innerWidth >= 1024){
+        carregarPedidoDesktop();
+
+        const pedido = document.querySelector("aside");
+
+        pedido.scrollIntoView({
+            behavior:"smooth"
+        });
+    }else{
+        // APP
+        window.location.href = "pages/pedidos.html";
+    }
+});
+
+function carregarPedidoDesktop(){
+    const area = document.getElementById("pedidoDesktop");
+    if(!area) return;
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    area.innerHTML = "";
+
+    if(cart.length === 0){
+        area.innerHTML =
+        `<p class="text-gray-500 text-center">
+            Nenhum pedido
+        </p>`;
+
+        return;
+    }
+
+    cart.forEach((item,index)=>{
+        area.innerHTML += 
+        `<div class="bg-white rounded-xl p-3 mb-3 shadow">
+            <img src="${item.image}" class="w-20 h-20 object-cover rounded-lg">
+
+            <h3 class="font-bold">
+                ${item.title}
+            </h3>
+
+            <p>
+                Quantidade: ${item.quantity}
+            </p>
+
+            <p class="font-bold">
+                ${item.price}
+            </p>
+
+            <div class="flex gap-2 mt-3">
+                <button onclick="removerPedido(${index})"  class="bg-red-500 text-white px-3 py-2 rounded-lg">
+                    Remover
+                </button>
+
+                <button onclick="finalizarPedido()" class="bg-black text-white px-3 py-2 rounded-lg">
+                    Finalizar
+                </button>
+            </div>
+        </div>`;
+    });
+}
+
+function removerPedido(index){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.splice(index,1);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    carregarPedidoDesktop();
+}
+
+function finalizarPedido(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if(cart.length === 0){
+        alert("Pedido vazio!");
+
+        return;
+    }
+
+    alert("Pedido enviado!");
+
+    localStorage.removeItem("cart");
+
+    carregarPedidoDesktop();
+}
+
+// PROTEÇÃO DE LOGIN
+const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado"));
+
+if (!usuarioLogado) {
+    window.location.href = "login.html";
+}
