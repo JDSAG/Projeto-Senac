@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil</title>
+
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+    <body class="bg-gray-100 min-h-screen">
+        <header class="bg-white shadow p-5 flex items-center gap-4">
+            <button onclick="history.back()" class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center">
+                <svg class="w-6 h-6 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                </svg>
+            </button>
+
+            <h1 class="text-2xl font-bold">
+                Perfil
+            </h1>
+        </header>
+
+        <main class="max-w-md mx-auto p-5">
+            <div class="bg-white rounded-2xl shadow p-6 text-center">
+                <div class="flex justify-center">
+                    <img id="fotoPerfil" src="../img/user.png" class="w-32 h-32 rounded-full object-cover border">
+                </div>
+
+                <h2 id="nomeUsuario" class="text-xl font-bold mt-4">
+                    Usuário
+                </h2>
+
+                <p id="emailUsuario" class="text-gray-500 mt-2">
+                    email@email.com
+                </p>
+
+                <button id="trocarFoto" class="mt-5 bg-gray-200 px-5 py-3 rounded-xl">
+                    Trocar foto
+                </button>
+
+                <input type="file" id="inputFoto" accept="image/*" class="hidden">
+
+                <div class="flex gap-3 mt-6">
+                    <button id="sair" class="flex-1 bg-black text-white py-3 rounded-xl font-semibold">
+                        Sair
+                    </button>
+
+                    <button id="excluirConta" class="flex-1 bg-red-500 text-white py-3 rounded-xl font-semibold">
+                        Excluir
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <script src="../js/perfil.js"></script>
+    </body>
+</html>
