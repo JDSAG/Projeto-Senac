@@ -7,6 +7,9 @@ router = APIRouter(prefix="/pedido", tags=["Pedido"])
 def listar_pedido():
     return PedidoService.find_pedido()
 
+#@router.post("/")
+#Criar um create_pedido() 
+
 @router.patch("/{item_id}/iniciar")
 def iniciar_pedido(item_id:int):
     pedido = PedidoService.iniciar(item_id)

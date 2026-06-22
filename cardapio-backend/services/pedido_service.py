@@ -5,6 +5,13 @@ from database.database import SessionLocal
 class PedidoService():
     session = SessionLocal()
     
+    @classmethod
+    def create(cls, pedido:dict):
+        new_pedido = Pedido(**pedido)
+        cls.session.add(new_pedido)
+        cls.session.commit()
+        return 'Pedido Feito com sucesso!'
+    
     @classmethod 
     def find_pedido(cls):
         itens = cls.session.query(Pedido).filter(

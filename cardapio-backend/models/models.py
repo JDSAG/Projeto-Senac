@@ -1,5 +1,5 @@
 from sqlalchemy import *
-from sqlalchemy.orm import declarative_base, relationship
+from sqlalchemy.orm import declarative_base, relationship,validates
 from datetime import datetime
 
 Base = declarative_base()
@@ -9,9 +9,16 @@ class Mesa(Base):
     id = Column(Integer, primary_key=True)
     numero = Column(Integer, nullable=False)
     qrcode = Column(String,nullable=True) #O proprio Dev que irá mudar ou colocar o link para a mesa, isso aqui é um registro do restaurante
-    status = Column(String, nullable=False) #Caso ocupado, tals
+    status = Column(String, default="disponivel") #Caso ocupado, tals
     
     pedidos = relationship("Pedido", back_populates="mesa")
+    
+    @validates("status")
+    def validade_status(self, key, value):
+        status_validos = ["disponivel, reservado, ocupado"] #Pode ser mudado caso necessário
+        if value not in status_validos:
+            raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
+        return value 
     
     def to_dict(self):
         return{
@@ -45,7 +52,7 @@ class Pedido(Base):
     id = Column(Integer, primary_key=True)
     nome_cliente = Column(String,nullable=False)
     mesa_id = Column(Integer,ForeignKey("mesas.id"))
-    status = Column(String,nullable=False)
+    status = Column(String,default="pendente")
     
     mesa = relationship("Mesa",back_populates="pedidos")
     itens = relationship("ItemPedido",back_populates="pedido")
