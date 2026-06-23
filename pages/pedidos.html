@@ -29,6 +29,11 @@
                 </p>
             </div>
 
+            <div id="totalPedido" class="bg-white rounded-xl p-4 mt-6 text-xl font-bold flex justify-between">
+                <span>Total:</span>
+                <span id="valorTotal">R$ 0,00</span>
+            </div>
+
             <div class="flex gap-3 mt-6">
                 <button  onclick="limparPedido()" class="w-1/3 bg-red-500 text-white py-4 rounded-xl font-bold">
                     Remover Tudo
@@ -73,7 +78,6 @@
 
             // Remove todos os produtos do pedido
             function limparPedido(){
-
                 // apaga o carrinho inteiro
                 localStorage.removeItem("cart");
                 // recarrega a página
@@ -107,10 +111,21 @@
             if(cart.length === 0){
                 vazio.classList.remove("hidden");
             }else{
+                let total = 0;
+
                 //mostra cada produtos
                 cart.forEach((item,index)=>{
-                    pedidoArea.innerHTML += `
-                        <div class="bg-white rounded-2xl shadow p-4 flex gap-4">
+                    let valor = Number(
+                        item.price
+                        .replace("R$","")
+                        .replace(".","")
+                        .replace(",",".")
+                    );
+
+                    total += valor * item.quantity;
+
+                    pedidoArea.innerHTML += 
+                    `<div class="bg-white rounded-2xl shadow p-4 flex gap-4">
                             <img src="${item.image}" class="w-28 h-28 rounded-xl object-cover">
                         <div>
 
@@ -132,6 +147,12 @@
                         </div>
                     </div>`;
                 });
+
+                const valorTotal = document.getElementById("valorTotal");
+
+                    if(valorTotal){
+                        valorTotal.textContent = "R$ " + total.toFixed(2).replace(".",",");
+                    }
             }
         </script>
     </body>

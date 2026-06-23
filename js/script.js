@@ -131,6 +131,8 @@ function carregarPedidoDesktop(){
 
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
+    let total = 0;
+
     area.innerHTML="";
 
     if(cart.length===0){
@@ -139,30 +141,47 @@ function carregarPedidoDesktop(){
             Nenhum pedido
         </p>`;
         return;
+    }else{
+        cart.forEach((item,index)=>{
+            let valor = Number(
+                item.price.replace("R$","")
+                .replace(".","")
+                .replace(",",".")
+            );
+
+            total += valor * item.quantity;
+
+            area.innerHTML +=
+            `<div class="bg-white rounded-xl p-3 mb-3 shadow">
+                <img src="${item.image}" class="w-20 h-20 object-cover rounded-lg">
+
+                <h3 class="font-bold">
+                    ${item.title}
+                </h3>
+
+                <p>
+                    Quantidade: ${item.quantity}
+                </p>
+
+                <p class="font-bold">
+                    R$ ${(valor * item.quantity)
+                    .toFixed(2)
+                    .replace(".",",")}
+                </p>
+
+                <button onclick="removerPedido(${index})" class="bg-red-500 text-white px-3 py-2 rounded-lg mt-3">
+                    Remover
+                </button>
+            </div>`;
+        });
+
+        const totalDesktop = document.getElementById("totalDesktop");
+
+        if(totalDesktop){
+            totalDesktop.textContent =
+            "R$ " + total.toFixed(2).replace(".",",");
+        }
     }
-
-    cart.forEach((item,index)=>{
-        area.innerHTML +=
-        `<div class="bg-white rounded-xl p-3 mb-3 shadow">
-            <img src="${item.image}" class="w-20 h-20 object-cover rounded-lg">
-
-            <h3 class="font-bold">
-                ${item.title}
-            </h3>
-
-            <p>
-                Quantidade: ${item.quantity}
-            </p>
-
-            <p class="font-bold">
-                ${item.price}
-            </p>
-
-            <button onclick="removerPedido(${index})" class="bg-red-500 text-white px-3 py-2 rounded-lg mt-3">
-                Remover
-            </button>
-        </div>`;
-    });
 }
 
 function removerPedido(index){
@@ -177,6 +196,15 @@ function removerPedido(index){
 
 function limparPedido(){
     localStorage.removeItem("cart");
+
+    carregarPedidoDesktop();
+
+    const totalDesktop = document.getElementById("totalDesktop");
+
+    if(totalDesktop){
+        totalDesktop.textContent = "R$ 0,00";
+    }
+
     location.reload();
 }
 
