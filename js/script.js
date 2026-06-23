@@ -165,6 +165,15 @@ function carregarPedidoDesktop(){
     });
 }
 
+function removerPedido(index){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.splice(index, 1);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    carregarPedidoDesktop();
+}
 
 function limparPedido(){
     localStorage.removeItem("cart");
