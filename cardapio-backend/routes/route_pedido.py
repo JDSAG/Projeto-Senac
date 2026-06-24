@@ -7,8 +7,15 @@ router = APIRouter(prefix="/pedido", tags=["Pedido"])
 def listar_pedido():
     return PedidoService.find_pedido()
 
-#@router.post("/")
-#Criar um create_pedido() 
+@router.post("/")
+def create_pedido(pedido:dict):
+    try:
+        result = PedidoService.create(pedido)
+        if not result:
+            raise HTTPException(status_code=404, detail="Item não encontrado")
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 @router.patch("/{item_id}/iniciar")
 def iniciar_pedido(item_id:int):
@@ -30,4 +37,3 @@ def excluir_pedido(item_id:int):
     if not pedido:
         raise HTTPException(status_code=404, detail="Item não encontrado")  
     return pedido
-

@@ -1,6 +1,8 @@
 from models.models import Mesa
 from database.database import SessionLocal
 from schemas.schemas import MesaCreate
+from fastapi import Request
+import qrcode 
 
 class MesaService():
     session = SessionLocal()
@@ -53,4 +55,20 @@ class MesaService():
         except Exception as e:
             cls.session.rollback()
             print(f"Erro ao localizar mesa. Error: {e}")
+            return None
+    
+    @classmethod
+    def gerar_url_qrcode(cls, mesa_id: int, request: Request):
+        try:
+            mesa = cls.find_by_id(mesa_id)
+
+            if not mesa:
+                raise Exception("Mesa não encontrada")
+
+            return str(request.url_for(
+                "find_id_mesa",
+                mesa_id=mesa.id))
+        
+        except Exception as e:
+            print(f"Erro ao gerar qrcode. Error: {e}")
             return None
