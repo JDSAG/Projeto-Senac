@@ -17,6 +17,31 @@ if(banner && stickyBar){
 
 }
 
+// BUSCA NO CARDÁPIO
+const searchInputs = document.querySelectorAll('input[placeholder="Buscar no cardápio"]');
+const products = document.querySelectorAll(".product-card");
+
+searchInputs.forEach(input => {
+
+    input.addEventListener("input", () => {
+        const text = input.value.toLowerCase();
+
+        products.forEach(product => {
+            const title = product.dataset.title.toLowerCase();
+            const description = product.dataset.description.toLowerCase();
+
+            if(
+                title.includes(text) ||
+                description.includes(text)
+            ){
+                product.style.display = "flex";
+            }else{
+                product.style.display = "none";
+            }
+        });
+    });
+});
+
 // MENU
 const categorias = document.querySelectorAll(".categoria");
 
