@@ -8,7 +8,6 @@ class Mesa(Base):
     __tablename__ = "mesas"
     id = Column(Integer, primary_key=True)
     numero = Column(Integer, nullable=False)
-    qrcode = Column(String,nullable=True) #O proprio Dev que irá mudar ou colocar o link para a mesa, isso aqui é um registro do restaurante
     status = Column(String, default="disponivel") #Caso ocupado, tals
     
     pedidos = relationship("Pedido", back_populates="mesa")
@@ -45,7 +44,6 @@ class Cardapio(Base):
             "categoria":self.categoria,
             "ativo":self.ativo
         }
-    
     
 class Pedido(Base):
     __tablename__ = "pedidos"
