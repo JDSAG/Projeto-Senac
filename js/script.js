@@ -70,25 +70,25 @@ if(modal){
     const modalPrice = document.getElementById("modalPrice");
     const modalImage = document.getElementById("modalImage");
 
-
     let quantidade = 1;
+    // guarda o id do produto selecionado
+    let produtoSelecionado = null;
 
     const quantity = document.getElementById("quantity");
     const plus = document.getElementById("plus");
     const minus = document.getElementById("minus");
-
-
 
     document.querySelectorAll(".product-card").forEach(card=>{
         card.addEventListener("click",()=>{
             quantidade = 1;
             quantity.textContent = 1;
 
+            // pega o id do produto do banco
+            produtoSelecionado = Number(card.dataset.id);
             modalTitle.textContent = card.dataset.title;
             modalDescription.textContent = card.dataset.description;
             modalPrice.textContent = card.dataset.price;
             modalImage.src = card.dataset.image;
-
             modal.classList.remove("hidden");
         });
     });
@@ -107,26 +107,28 @@ if(modal){
     minus.onclick = ()=>{
         if(quantidade > 1){
             quantidade--;
-
             quantity.textContent = quantidade;
         }
     };
+
+
 
     // COMPRAR
     document.getElementById("buyNow").onclick = ()=>{
         let cart = JSON.parse(localStorage.getItem("cart")) || [];
 
         let item = {
+            produto_id: produtoSelecionado,
             title: modalTitle.textContent,
             description: modalDescription.textContent,
             price: modalPrice.textContent,
             image: modalImage.src,
             quantity: quantidade
-
         };
 
-        // procura produto igual
-        let existe =cart.find(produto => produto.title === item.title);
+        let existe = cart.find(
+            produto => produto.produto_id === item.produto_id
+        );
 
         if(existe){
             existe.quantity += item.quantity;
@@ -148,7 +150,6 @@ if(modal){
 
 
 // PEDIDO DESKTOP
-
 function carregarPedidoDesktop(){
     const area = document.getElementById("pedidoDesktop");
 
@@ -233,18 +234,47 @@ function limparPedido(){
     location.reload();
 }
 
-function finalizarPedido(){
+async function finalizarPedido(){
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
     if(cart.length === 0){
         alert("Seu pedido está vazio!");
-
         return;
     }
 
-    alert("Pedido enviado com sucesso!");
+    let pedido = {
+        nome_cliente:"Cliente",
+        mesa_id:1,
+        itens: cart.map(item => ({
+            produto_id:item.produto_id,
+            quantidade:item.quantity
+        }))
+    };
 
-    localStorage.removeItem("cart");
+    try{
+        let resposta = await fetch("http://localhost:8000/pedido/",{
+            method:"POST",
+            headers:{
+                "Content-Type":"application/json"
+            },
+            body:JSON.stringify(pedido)
+            }
+        );
 
-    carregarPedidoDesktop();
+        if(resposta.ok){
+            alert("Pedido enviado com sucesso!");
+
+            localStorage.removeItem("cart");
+
+            window.location.href="index.html";
+        }else{
+            alert("Erro ao enviar pedido");
+        }
+    }catch(error){
+        console.log(error);
+
+        alert("API não encontrada");
+    }
 }
 
 window.onload = ()=>{
