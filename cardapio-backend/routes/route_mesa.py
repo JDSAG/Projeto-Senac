@@ -4,7 +4,6 @@ from services.mesa_service import MesaService, MesaCreate
 from io import BytesIO
 import qrcode
 
-
 router = APIRouter(prefix="/mesa",tags=["Mesa"])
 
 @router.get("/")

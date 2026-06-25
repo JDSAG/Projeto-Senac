@@ -7,14 +7,14 @@ Base = declarative_base()
 class Mesa(Base):
     __tablename__ = "mesas"
     id = Column(Integer, primary_key=True)
-    numero = Column(Integer, nullable=False)
+    numero = Column(Integer, nullable=False,unique=True)
     status = Column(String, default="disponivel") #Caso ocupado, tals
     
     pedidos = relationship("Pedido", back_populates="mesa")
     
     @validates("status")
     def validade_status(self, key, value):
-        status_validos = ["disponivel, reservado, ocupado"] #Pode ser mudado caso necessário
+        status_validos = ["disponivel", "reservado", "ocupado"] #Pode ser mudado caso necessário
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
         return value 
@@ -49,9 +49,16 @@ class Pedido(Base):
     __tablename__ = "pedidos"
     id = Column(Integer, primary_key=True)
     nome_cliente = Column(String,nullable=False)
-    mesa_id = Column(Integer,ForeignKey("mesas.id"))
+    mesa_id = Column(Integer,ForeignKey("mesas.id"),nullable=False)
     status = Column(String,default="pendente")
     
+    @validates("status")
+    def validade_status(self, key, value):
+        status_validos = ["pendente","em_andamento","concluido"]
+        if value not in status_validos:
+            raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
+        return value
+        
     mesa = relationship("Mesa",back_populates="pedidos")
     itens = relationship("ItemPedido",back_populates="pedido")
     
@@ -72,6 +79,12 @@ class ItemPedido(Base):
     produto_id = Column(Integer,ForeignKey("cardapio.id"),nullable=False)
     quantidade = Column(Integer,nullable=False)
     subtotal = Column(Float,nullable=False)
+    
+    @validates("quantidade")
+    def validate_quantidade(self, key, value):
+        if value <= 0:
+            raise ValueError("Quantidade deve ser maior que zero")
+        return value
     
     pedido = relationship("Pedido",back_populates="itens")
     produto = relationship("Cardapio")
