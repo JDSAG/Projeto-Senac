@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import CardapioScreen from "./screens/CardapioScreen";
 import PedidosScreen from "./screens/PedidosScreen";
 import { Image } from "react-native";
-
+import MesasScreen from "./screens/MesasScreen"
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +30,17 @@ export default function App() {
             tabBarIcon: ({ color, size }) => (
               <Image
                 source={require("./assets/pedidos.png")}
+                style={{ width: size, height: size, tintColor: color }}
+              />
+            ),
+          }}/>
+
+          <Tab.Screen name="Mesas" 
+        component={MesasScreen}
+        options={{
+            tabBarIcon: ({ color, size }) => (
+              <Image
+                source={require("./assets/mesa.png")}
                 style={{ width: size, height: size, tintColor: color }}
               />
             ),

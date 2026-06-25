@@ -41,3 +41,4 @@ def visualizar_qrcode(mesa_id: int,request: Request):
     
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+    

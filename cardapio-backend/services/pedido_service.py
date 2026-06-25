@@ -1,14 +1,14 @@
 from models.models import *
 from database.database import SessionLocal
-
+from schemas.schemas import PedidoCreate
 
 class PedidoService():
     session = SessionLocal()
     
     @classmethod
-    def create(cls, pedido:dict):
+    def create(cls, pedido:PedidoCreate):
         try:
-            mesa = cls.session.query(Mesa).filter(Mesa.id == pedido["mesa_id"]).first()
+            mesa = cls.session.query(Mesa).filter(Mesa.id == pedido.mesa_id).first()
             if not mesa:
                 raise ValueError("Mesa não encontrada")
             
@@ -16,22 +16,22 @@ class PedidoService():
                 raise ValueError(f"Mesa {mesa.numero} não pode receber pedidos")
             
             new_pedido = Pedido(
-                nome_cliente=pedido["nome_cliente"],
-                mesa_id=pedido["mesa_id"]
+                nome_cliente=pedido.nome_cliente,
+                mesa_id=pedido.mesa_id
             )
             
             cls.session.add(new_pedido)
             cls.session.flush()
             
-            for item in pedido["itens"]:
-                produto = cls.session.query(Cardapio).filter(Cardapio.id == item["produto_id"]).first()
+            for item in pedido.itens:
+                produto = cls.session.query(Cardapio).filter(Cardapio.id == item.produto_id).first()
                 if not produto:
-                    raise ValueError(f"Produto {item['produto_id']} não encontrado")
+                    raise ValueError(f"Produto {item.produto_id} não encontrado")
                 
                 if not produto.ativo:
                     raise ValueError(f"Produto '{produto.nome}' está indisponível")
                 
-                quantidade = item["quantidade"]
+                quantidade = item.quantidade
                 subtotal = produto.preco * quantidade
                 
                 novo_item = ItemPedido(
@@ -82,9 +82,12 @@ class PedidoService():
     def concluir(cls,id:int):
         try:
             pedido = cls.session.query(Pedido).where(Pedido.id == id).one()
-            if pedido.status == "em_andamento":
-                pedido.status = "concluido"
-                cls.session.commit()
+            if pedido.status != "em_andamento":
+                cls.session.rollback()
+                raise ValueError("Erro ao concluir pedido, pedido precisa estar em andamento!")
+            
+            pedido.status = "concluido"
+            cls.session.commit()
             return pedido
         except Exception as e:
             print(f"Erro ao concluir pedido {id}: {e}")

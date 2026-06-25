@@ -1,6 +1,5 @@
 from sqlalchemy import *
 from sqlalchemy.orm import declarative_base, relationship,validates
-from datetime import datetime
 
 Base = declarative_base()
 
@@ -12,12 +11,21 @@ class Mesa(Base):
     
     pedidos = relationship("Pedido", back_populates="mesa")
     
+    @validates("numero")
+    def validate_numero(self, key, value):
+        if value <= 0:
+            raise ValueError("Número da mesa deve ser maior que zero")
+        return value
+    
     @validates("status")
     def validade_status(self, key, value):
-        status_validos = ["disponivel", "reservado", "ocupado"] #Pode ser mudado caso necessário
+
+    # ALTERADO:
+    # Padronizei todos os status do sistema
+        status_validos = ["disponivel","ocupado","reservado"]
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
-        return value 
+        return value
     
     def to_dict(self):
         return{
