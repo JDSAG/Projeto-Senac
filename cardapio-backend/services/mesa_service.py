@@ -13,7 +13,7 @@ class MesaService():
             new_mesa = Mesa(numero = mesa.numero)
             cls.session.add(new_mesa)
             cls.session.commit()
-            cls.session.refresh()
+            cls.session.refresh(new_mesa)
             return new_mesa.to_dict()
         except Exception as e:
             cls.session.rollback()
@@ -23,7 +23,7 @@ class MesaService():
     @classmethod 
     def find_all(cls):
         try:
-            itens = cls.session.query(Mesa).all()
+            itens = cls.session.query(Mesa).order_by(Mesa.numero).all()
             result = []
             for e in itens:
                 result.append(e.to_dict())
@@ -45,30 +45,27 @@ class MesaService():
             return None
     
     @classmethod
-    def change_status(cls, id:int,status:str):
+    def update_status(cls, id: int, status: str):
         try:
             mesa = cls.session.query(Mesa).where(Mesa.id == id).one()
-            mesa.status(status)
+            mesa.status = status
             cls.session.commit()
             cls.session.refresh(mesa)
-            
+            return mesa.to_dict()
         except Exception as e:
             cls.session.rollback()
-            print(f"Erro ao localizar mesa. Error: {e}")
+            print(f"Erro ao atualizar status da mesa. Error: {e}")
             return None
     
     @classmethod
     def gerar_url_qrcode(cls, mesa_id: int, request: Request):
         try:
             mesa = cls.find_by_id(mesa_id)
-
             if not mesa:
                 raise Exception("Mesa não encontrada")
-
             return str(request.url_for(
                 "find_id_mesa",
                 mesa_id=mesa.id))
-        
         except Exception as e:
             print(f"Erro ao gerar qrcode. Error: {e}")
             return None

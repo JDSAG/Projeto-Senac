@@ -1,57 +1,70 @@
-import React, { useEffect, useState } from "react";
-import {Text,StyleSheet,View,FlatList,Alert,ActivityIndicator,} from "react-native";
-import MesaCard from "../components/mesasCards";
+import React, { useState } from "react";
+import {View,Text,FlatList,ActivityIndicator,Pressable,StyleSheet,Alert,} from "react-native";
 
-const apiURL = process.env.EXPO_PUBLIC_BASE_URL;
+import MesaCard from "../components/mesasCards";
+import { useMesas } from "../components/useMesas";
+import NovaMesaModal from "../components/modals/newMesaModal";
+import StatusMesaModal from "../components/modals/statusMesaModal";
+import QrCodeModal from "../components/modals/qrCodeModal";
+
+const STATUS_LABELS = {
+  disponivel: "Disponível",
+  ocupado: "Ocupada",
+  reservado: "Reservada",
+};
 
 export default function MesasScreen() {
-  const [mesas, setMesas] = useState([]);
-  const [loading, setLoading] = useState(true);
-  useEffect(() => {
-    buscarMesas();
-    const intervalo = setInterval(() => {
-      buscarMesas();
-    }, 10000);
-    return () => clearInterval(intervalo);
-  }, []);
+  const { mesas, loading, criando, atualizando, criarMesa, atualizarStatus } = useMesas();
 
-  const buscarMesas = async () => {
-    try {
-      const response = await fetch(`${apiURL}/mesa`);
-      if (!response.ok) {
-        throw new Error();
-      }
+  const [criarVisivel, setCriarVisivel] = useState(false);
+  const [statusVisivel, setStatusVisivel] = useState(false);
+  const [qrVisivel, setQrVisivel] = useState(false);
+  const [mesaSelecionada, setMesaSelecionada] = useState(null);
+  const [mesaQr, setMesaQr] = useState(null);
 
-      const data = await response.json();
-      setMesas(data);
-    } catch (error) {
-      Alert.alert(
-        "Erro",
-        "Não foi possível carregar as mesas."
-      );
-    }finally {
-      setLoading(false);
-    }};
+  function abrirMesa(mesa) {
+    Alert.alert(`Mesa ${mesa.numero}`, `Status: ${STATUS_LABELS[mesa.status]}`);
+  }
 
-  const abrirMesa = (mesa) => {
-    Alert.alert(
-      `Mesa ${mesa.numero}`,
-      `Status: ${mesa.status}`
-    );
-  };
+  function abrirStatus(mesa) {
+    setMesaSelecionada(mesa);
+    setStatusVisivel(true);
+  }
+
+  function fecharStatus() {
+    setStatusVisivel(false);
+    setMesaSelecionada(null);
+  }
+
+  function abrirQr(mesa) {
+    setMesaQr(mesa);
+    setQrVisivel(true);
+  }
+
+  function fecharQr() {
+    setQrVisivel(false);
+    setMesaQr(null);
+  }
+
+  async function handleAtualizarStatus(status) {
+    if (!mesaSelecionada) return;
+    const sucesso = await atualizarStatus(mesaSelecionada.id, status);
+    if (sucesso) fecharStatus();
+  }
 
   if (loading) {
-    return (
-      <ActivityIndicator
-        size="large"
-        style={{ flex: 1 }}
-    />
-);}
-return (
+    return <ActivityIndicator size="large" style={{ flex: 1 }} />;
+  }
+
+  return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>
-        Controle de Mesas
-      </Text>
+      <View style={styles.header}>
+        <Text style={styles.titulo}>Controle de Mesas</Text>
+        <Pressable style={styles.novaBotao} onPress={() => setCriarVisivel(true)}>
+          <Text style={styles.novaBotaoTexto}>+ Mesa</Text>
+        </Pressable>
+      </View>
+
       <FlatList
         data={mesas}
         keyExtractor={(item) => item.id.toString()}
@@ -61,22 +74,57 @@ return (
           <MesaCard
             mesa={item}
             onPress={abrirMesa}
+            onStatusPress={abrirStatus}
+            onQrPress={abrirQr}
           />
         )}
+      />
+
+      <QrCodeModal visible={qrVisivel} mesa={mesaQr} onClose={fecharQr} />
+
+      <NovaMesaModal
+        visible={criarVisivel}
+        onClose={() => setCriarVisivel(false)}
+        onCriar={criarMesa}
+        criando={criando}
+      />
+
+      <StatusMesaModal
+        visible={statusVisivel}
+        mesa={mesaSelecionada}
+        onClose={fecharStatus}
+        onAtualizar={handleAtualizarStatus}
+        atualizando={atualizando}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-container: {
+  container: {
     flex: 1,
-    padding: 15,
     backgroundColor: "#f0f0f0",
-},
-titulo: {
+    padding: 15,
+  },
+  header: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  titulo: {
     fontSize: 22,
     fontWeight: "bold",
-    marginBottom: 15,
-},
+  },
+  novaBotao: {
+    backgroundColor: "#4CAF50",
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+  novaBotaoTexto: {
+    color: "#fff",
+    fontWeight: "700",
+    fontSize: 15,
+  },
 });

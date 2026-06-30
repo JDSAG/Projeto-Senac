@@ -4,16 +4,19 @@
     "slug": "cardapio-expo",
     "version": "1.0.0",
     "orientation": "portrait",
+    "icon": "./assets/senac-icon.png",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
+        "foregroundImage": "./assets/senac-icon.png",
         "backgroundColor": "#E6F4FE"
       }
     },
     "web": {
+      "favicon": "./assets/senac-icon.png"
     }
   }
 }

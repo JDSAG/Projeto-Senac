@@ -3,7 +3,7 @@
 
 from models.models import *
 from database.database import SessionLocal
-
+from schemas.schemas import CardapioCreate
 
 class CardapioService():
     session = SessionLocal()
@@ -20,6 +20,22 @@ class CardapioService():
         except Exception as e:
             cls.session.rollback()
             raise e
+    
+    @classmethod
+    def create(cls,cardapio:CardapioCreate):
+        try:
+            new_item = Cardapio(nome = cardapio.nome,
+                                descricao = cardapio.descricao,
+                                preco = cardapio.preco,
+                                categoria = cardapio.categoria)
+            cls.session.add(new_item)
+            cls.session.commit()
+            cls.session.refresh(new_item)
+            return new_item.to_dict()
+        except Exception as e:
+            cls.session.rollback()
+            print(f"Erro ao adicionar item ao cardapio. Error: {e}")
+            return None
     
     @classmethod 
     def find_cardapio(cls):

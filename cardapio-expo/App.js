@@ -1,51 +1,33 @@
-import { NavigationContainer} from "@react-navigation/native";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import CardapioScreen from "./screens/CardapioScreen";
-import PedidosScreen from "./screens/PedidosScreen";
-import { Image } from "react-native";
-import MesasScreen from "./screens/MesasScreen"
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-const Tab = createBottomTabNavigator();
+import HomeScreen from "./screens/HomeScreen";
+import CaixaNavigator from "./navigation/CaixaNavigator";
+import CozinhaNavigator from "./navigation/CozinhaNavigator";
 
-
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Tab.Navigator>
-        
-        <Tab.Screen name="Cardápio"
-        component={CardapioScreen}
-        options={{
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={require("./assets/cardapio.png")}
-                style={{ width: size, height: size, tintColor: color }}
-              />
-            ),
-          }}/>
-        <Tab.Screen name="Pedidos" 
-        component={PedidosScreen}
-        options={{
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={require("./assets/pedidos.png")}
-                style={{ width: size, height: size, tintColor: color }}
-              />
-            ),
-          }}/>
+      <Stack.Navigator
+        initialRouteName="Home"
+        screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen}
+        />
 
-          <Tab.Screen name="Mesas" 
-        component={MesasScreen}
-        options={{
-            tabBarIcon: ({ color, size }) => (
-              <Image
-                source={require("./assets/mesa.png")}
-                style={{ width: size, height: size, tintColor: color }}
-              />
-            ),
-          }}/>
-      </Tab.Navigator>
+        <Stack.Screen
+          name="Caixa"
+          component={CaixaNavigator}
+        />
+
+        <Stack.Screen
+          name="Cozinha"
+          component={CozinhaNavigator}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
   );
 }

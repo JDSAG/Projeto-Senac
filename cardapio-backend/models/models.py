@@ -19,9 +19,6 @@ class Mesa(Base):
     
     @validates("status")
     def validade_status(self, key, value):
-
-    # ALTERADO:
-    # Padronizei todos os status do sistema
         status_validos = ["disponivel","ocupado","reservado"]
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
