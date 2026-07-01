@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from routes.route_cardapio import router as cardapio_router
-#from routes.route_pedido import router as pedido_router
-#from routes.route_mesa import router as mesa_router
+from routes.route_pedido import router as pedido_router
+from routes.auth_route import router as auth_router
+
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -16,9 +17,10 @@ app.add_middleware(
 )
 
 app.include_router(cardapio_router)
-#app.include_router(pedido_router)
-#app.include_router(mesa_router)
+app.include_router(pedido_router)
+app.include_router(auth_router)
 
+#app.include_router(mesa_router)
 @app.get("/")
 def root():
     return {"mensagem": "API funcionando!"}

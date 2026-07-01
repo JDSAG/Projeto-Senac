@@ -8,8 +8,6 @@ class ItemPedidoCreate(BaseModel):
     quantidade: int
 
 class PedidoCreate(BaseModel):
-    nome_cliente: str
-    mesa_id: int
     itens: list[ItemPedidoCreate]
     
 class CardapioCreate(BaseModel):
@@ -20,3 +18,12 @@ class CardapioCreate(BaseModel):
     
 class MesaStatusUpdate(BaseModel):
     status: str
+
+class LoginRequest(BaseModel):
+    mesa_id: int
+    nome_cliente: str
+
+
+class TokenResponse(BaseModel):
+    access_token: str
+    token_type: str

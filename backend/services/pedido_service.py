@@ -78,33 +78,3 @@ class PedidoService():
         pedido = cls.session.query(Pedido).where(Pedido.id == id).one()
         return pedido.to_dict()
     
-    @classmethod
-    def concluir(cls,id:int):
-        try:
-            pedido = cls.session.query(Pedido).where(Pedido.id == id).one()
-            if pedido.status != "em_andamento":
-                cls.session.rollback()
-                raise ValueError("Erro ao concluir pedido, pedido precisa estar em andamento!")
-            
-            pedido.status = "concluido"
-            cls.session.commit()
-            return pedido
-        except Exception as e:
-            print(f"Erro ao concluir pedido {id}: {e}")
-            cls.session.rollback()
-            raise
-        
-    @classmethod
-    def excluir(cls, id: int):
-        try:
-            pedido = cls.session.query(Pedido).filter(Pedido.id == id).one()
-            
-            cls.session.query(ItemPedido).filter(ItemPedido.pedido_id == id).delete()
-            
-            cls.session.delete(pedido)
-            cls.session.commit()
-            return "Pedido Removido."
-        except Exception as e:
-            print(f"Erro ao remover pedido {id}: {e}")
-            cls.session.rollback()
-            raise
