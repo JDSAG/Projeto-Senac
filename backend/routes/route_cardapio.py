@@ -8,10 +8,4 @@ router = APIRouter(prefix="/cardapio", tags=["Cardápio"])
 def listar_cardapio():
     return CardapioService.find_by_active()
 
-@router.post("/")
-def criar_cardapio(cardapio:CardapioCreate):
-    try:
-        result = CardapioService.create(cardapio)
-        return result
-    except Exception as e:
-        raise HTTPException(status_code=400, detail=str(e))
+

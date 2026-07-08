@@ -25,7 +25,6 @@ class AuthService:
                 "nome_cliente": nome_cliente,
             }
         )
-
         return {
             "access_token": token,
             "token_type": "bearer",

@@ -16,9 +16,7 @@ def get_cliente_atual(token: str = Depends(oauth2_scheme)):
             config.jwt_secret_key,
             algorithms=[config.algorithm],
         )
-
         return payload
-
     except JWTError:
 
         raise Exception("Token inválido")
