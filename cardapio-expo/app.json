@@ -17,6 +17,10 @@
     },
     "web": {
       "favicon": "./assets/senac-icon.png"
-    }
+    },
+    "plugins": [
+      "expo-status-bar",
+      "expo-font"
+    ]
   }
 }

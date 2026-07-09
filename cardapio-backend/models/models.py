@@ -55,11 +55,11 @@ class Pedido(Base):
     id = Column(Integer, primary_key=True)
     nome_cliente = Column(String,nullable=False)
     mesa_id = Column(Integer,ForeignKey("mesas.id"),nullable=False)
-    status = Column(String,default="pendente")
+    status = Column(String,default="em_aberto")
     
     @validates("status")
     def validade_status(self, key, value):
-        status_validos = ["pendente","em_andamento","concluido"]
+        status_validos = ["em_aberto","pendente","em_andamento","concluido"]
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
         return value

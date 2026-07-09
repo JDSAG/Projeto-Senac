@@ -82,7 +82,6 @@ export default function PedidosScreen() {
   if (loading) {
     return <ActivityIndicator style={{ flex: 1 }} size="large" />;
   }
-
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Text style={styles.titulo}>Pedidos dos Clientes</Text>

@@ -39,7 +39,7 @@ def concluir_pedido(item_id:int):
         raise HTTPException(status_code=404, detail="Item não encontrado")    
     return {"mensagem": "Status atualizado", "Pedido": pedido.status}
 
-@router.delete("/{item_id}/excluir")
+@router.patch("/{item_id}/excluir")
 def excluir_pedido(item_id:int):
     pedido = PedidoService.excluir(item_id)
     if not pedido:
