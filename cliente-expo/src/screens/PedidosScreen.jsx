@@ -10,7 +10,6 @@ import {
 } from "react-native";
 
 import { useFocusEffect } from "@react-navigation/native";
-
 import PedidoCard from "../components/PedidoCard";
 
 import {

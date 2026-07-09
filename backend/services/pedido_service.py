@@ -4,7 +4,6 @@ from schemas.schemas import PedidoCreate
 
 
 class PedidoService():
-
     @classmethod
     def create(cls, mesa_id: int, nome_cliente: str, itens: list):
         session = SessionLocal()
@@ -20,10 +19,17 @@ class PedidoService():
             if mesa.status in ["ocupado", "reservado"]:
                 raise ValueError(f"Mesa {mesa.numero} não pode receber pedidos")
 
-            new_pedido = Pedido(nome_cliente=nome_cliente, mesa_id=mesa_id)
+            # Reaproveita o pedido em aberto da mesa, se existir.
+            pedido = (
+                session.query(Pedido)
+                .filter(Pedido.mesa_id == mesa_id, Pedido.status == "em_aberto")
+                .first()
+            )
 
-            session.add(new_pedido)
-            session.flush()
+            if not pedido:
+                pedido = Pedido(nome_cliente=nome_cliente, mesa_id=mesa_id)
+                session.add(pedido)
+                session.flush()
 
             for item in itens:
                 produto = (
@@ -39,19 +45,35 @@ class PedidoService():
                     raise ValueError(
                         f"Produto '{produto.nome}' está indisponível"
                     )
-                subtotal = produto.preco * item.quantidade
-                session.add(
-                    ItemPedido(
-                        pedido_id=new_pedido.id,
-                        produto_id=produto.id,
-                        quantidade=item.quantidade,
-                        subtotal=subtotal,
+
+                # Se o produto já está no pedido, soma a quantidade em vez
+                # de criar uma segunda linha pro mesmo item.
+                item_existente = (
+                    session.query(ItemPedido)
+                    .filter(
+                        ItemPedido.pedido_id == pedido.id,
+                        ItemPedido.produto_id == produto.id,
                     )
+                    .first()
                 )
 
+                if item_existente:
+                    item_existente.quantidade += item.quantidade
+                    item_existente.subtotal = produto.preco * item_existente.quantidade
+                else:
+                    subtotal = produto.preco * item.quantidade
+                    session.add(
+                        ItemPedido(
+                            pedido_id=pedido.id,
+                            produto_id=produto.id,
+                            quantidade=item.quantidade,
+                            subtotal=subtotal,
+                        )
+                    )
+
             session.commit()
-            session.refresh(new_pedido)
-            return new_pedido.to_dict()
+            session.refresh(pedido)
+            return pedido.to_dict()
 
         except Exception as e:
             session.rollback()
