@@ -6,6 +6,8 @@ import {
   Image,
 } from "react-native";
 
+import { useState } from "react";
+
 export default function CardapioCard({
 
   item,
@@ -13,6 +15,18 @@ export default function CardapioCard({
   onAdicionar,
 
 }) {
+
+  const [quantidade, setQuantidade] = useState(1);
+
+  function diminuir() {
+    if (quantidade > 1) {
+      setQuantidade(quantidade - 1);
+    }
+  }
+
+  function aumentar() {
+    setQuantidade(quantidade + 1);
+  }
 
   return (
 
@@ -50,11 +64,37 @@ export default function CardapioCard({
 
       </Text>
 
+      <View style={styles.quantidadeContainer}>
+
+        <TouchableOpacity
+          style={styles.quantidadeBotao}
+          onPress={diminuir}
+        >
+          <Text style={styles.quantidadeTexto}>
+            -
+          </Text>
+        </TouchableOpacity>
+
+        <Text style={styles.quantidade}>
+          {quantidade}
+        </Text>
+
+        <TouchableOpacity
+          style={styles.quantidadeBotao}
+          onPress={aumentar}
+        >
+          <Text style={styles.quantidadeTexto}>
+            +
+          </Text>
+        </TouchableOpacity>
+
+      </View>
+
       <TouchableOpacity
 
         style={styles.botao}
 
-        onPress={onAdicionar}
+        onPress={() => onAdicionar(quantidade)}
 
       >
 
@@ -123,6 +163,54 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
 
     marginBottom: 15,
+
+  },
+
+  quantidadeContainer: {
+
+    flexDirection: "row",
+
+    alignItems: "center",
+
+    justifyContent: "center",
+
+    marginBottom: 15,
+
+  },
+
+  quantidadeBotao: {
+
+    backgroundColor: "#111",
+
+    width: 40,
+
+    height: 40,
+
+    borderRadius: 10,
+
+    alignItems: "center",
+
+    justifyContent: "center",
+
+  },
+
+  quantidadeTexto: {
+
+    color: "#FFF",
+
+    fontSize: 25,
+
+    fontWeight: "bold",
+
+  },
+
+  quantidade: {
+
+    fontSize: 20,
+
+    fontWeight: "bold",
+
+    marginHorizontal: 20,
 
   },
 
