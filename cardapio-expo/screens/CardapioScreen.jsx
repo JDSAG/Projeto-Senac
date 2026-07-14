@@ -1,5 +1,14 @@
-import { useEffect, useState } from "react";
-import {View,Text,StyleSheet,FlatList,ActivityIndicator} from "react-native";
+import { useCallback, useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ActivityIndicator,
+  RefreshControl,
+} from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
+
 import { ReceiptCards } from "../components/adminCards";
 import DisponivelBtn from "../components/disponivelBtn";
 
@@ -8,25 +17,39 @@ const apiURL = process.env.EXPO_PUBLIC_BASE_URL;
 export default function CardapioScreen() {
   const [cardapio, setCardapio] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [disponivel, setDisponivel] = useState({});
+  const [refreshing, setRefreshing] = useState(false);
 
-  const carregarCardapio = () => {
-    fetch(`${apiURL}/cardapio`)
-      .then((res) => res.json())
-      .then((data) => {
-        setCardapio(data);
+  async function carregarCardapio(showLoading = false) {
+    try {
+      if (showLoading) setLoading(true);
 
-        const estados = Object.fromEntries(
-          data.map((item) => [item.id, item.ativo])
-        );
+      const response = await fetch(`${apiURL}/cardapio`);
+      const data = await response.json();
 
-        setDisponivel(estados);
-        setLoading(false);
-      });
-  };
+      setCardapio(data);
+    } catch (error) {
+      console.log("Erro ao carregar cardápio:", error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  }
+
+  function atualizarEstado(id, ativo) {
+    setCardapio((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, ativo } : item
+      )
+    );
+  }
+
+  function onRefresh() {
+    setRefreshing(true);
+    carregarCardapio();
+  }
 
   useEffect(() => {
-    carregarCardapio();
+    carregarCardapio(true);
 
     const intervalo = setInterval(() => {
       carregarCardapio();
@@ -35,12 +58,11 @@ export default function CardapioScreen() {
     return () => clearInterval(intervalo);
   }, []);
 
-  function toggleDisponivel(id) {
-    setDisponivel((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-  }
+  useFocusEffect(
+    useCallback(() => {
+      carregarCardapio();
+    }, [])
+  );
 
   if (loading) {
     return (
@@ -53,12 +75,20 @@ export default function CardapioScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>🍔 Gerenciamento do Cardápio</Text>
+      <Text style={styles.titulo}>
+        🍔 Gerenciamento do Cardápio
+      </Text>
 
       <FlatList
         data={cardapio}
-        keyExtractor={(item) => item.id.toString()}
-        contentContainerStyle={{ paddingBottom: 30 }}
+        keyExtractor={(item) => String(item.id)}
+        contentContainerStyle={styles.lista}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+          />
+        }
         ListEmptyComponent={
           <Text style={styles.empty}>
             Nenhum item cadastrado.
@@ -68,7 +98,7 @@ export default function CardapioScreen() {
           <View style={styles.cardContainer}>
             <View
               style={{
-                opacity: disponivel[item.id] ? 1 : 0.45,
+                opacity: item.ativo ? 1 : 0.45,
               }}
             >
               <ReceiptCards item={item} />
@@ -77,8 +107,10 @@ export default function CardapioScreen() {
             <View style={styles.btnArea}>
               <DisponivelBtn
                 itemId={item.id}
-                ativo={disponivel[item.id]}
-                onToggle={() => toggleDisponivel(item.id)}
+                ativo={item.ativo}
+                onToggle={(novoEstado) =>
+                  atualizarEstado(item.id, novoEstado)
+                }
               />
             </View>
           </View>
@@ -99,9 +131,13 @@ const styles = StyleSheet.create({
   titulo: {
     fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 20,
     color: "#222",
+    marginBottom: 20,
     alignSelf: "center",
+  },
+
+  lista: {
+    paddingBottom: 30,
   },
 
   cardContainer: {
@@ -128,8 +164,8 @@ const styles = StyleSheet.create({
   },
 
   empty: {
-    textAlign: "center",
     marginTop: 50,
+    textAlign: "center",
     color: "#777",
     fontSize: 18,
   },

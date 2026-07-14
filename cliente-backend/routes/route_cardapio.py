@@ -7,5 +7,3 @@ router = APIRouter(prefix="/cardapio", tags=["Cardápio"])
 @router.get("/")
 def listar_cardapio():
     return CardapioService.find_by_active()
-
-

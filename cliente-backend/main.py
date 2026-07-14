@@ -3,7 +3,6 @@ from routes.route_cardapio import router as cardapio_router
 from routes.route_pedido import router as pedido_router
 from routes.auth_route import router as auth_router
 
-
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
