@@ -68,12 +68,12 @@ export default function CardapioScreen({ navigation }) {
     }
   }
 
-  async function adicionar(item) {
-    try {
-      await adicionarProduto(item.id);
+  async function adicionar(item, quantidade) {
+  try {
+    await adicionarProduto(item.id, quantidade);
 
-      // Atualiza somente a barra do pedido
-      await atualizarPedido();
+    // Atualiza somente a barra do pedido
+    await atualizarPedido();
     } catch (error) {
       Alert.alert(
         "Erro",
@@ -101,7 +101,7 @@ export default function CardapioScreen({ navigation }) {
         renderItem={({ item }) => (
           <CardapioCard
             item={item}
-            onAdicionar={() => adicionar(item)}
+            onAdicionar={(quantidade) => adicionar(item, quantidade)}
           />
         )}
       />
