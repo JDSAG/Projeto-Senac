@@ -7,6 +7,10 @@ class Config(BaseSettings):
     db_port: int
     db_name: str
     
+    cloudinary_cloud_name: str
+    cloudinary_api_key: str
+    cloudinary_api_secret: str
+    
     model_config = SettingsConfigDict(env_file='.env')
 
     @property
@@ -17,5 +21,4 @@ class Config(BaseSettings):
             f"@{self.db_host}:{self.db_port}/{self.db_name}"
             f"?sslmode=require"
         )
-        
 config = Config()

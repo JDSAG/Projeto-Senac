@@ -15,6 +15,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 app.include_router(cardapio_router)
 app.include_router(pedido_router)
 app.include_router(mesa_router)
