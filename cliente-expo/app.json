@@ -7,21 +7,18 @@
     "orientation": "portrait",
     "icon": "./assets/senac-icon.png",
     "userInterfaceStyle": "light",
-
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "NSCameraUsageDescription": "Precisamos da câmera para escanear o QR Code da mesa."
       }
     },
-
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/senac-icon.png",
         "backgroundColor": "#E6F4FE"
       }
     },
-
     "plugins": [
       [
         "expo-camera",
@@ -31,7 +28,8 @@
       ],
       "expo-secure-store",
       "expo-status-bar",
-      "expo-font"
+      "expo-font",
+      "expo-build-properties"
     ]
   }
 }

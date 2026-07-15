@@ -14,7 +14,6 @@ import * as ImagePicker from "expo-image-picker";
 import DelAndConcluirBtn from "./concluirEdeletarBtn";
 
 const apiURL = process.env.EXPO_PUBLIC_BASE_URL;
-const cloudName = process.env.EXPO_PUBLIC_CLOUDINARY_CLOUD_NAME;
 
 const STATUS = {
   pendente: {
@@ -27,9 +26,6 @@ const STATUS = {
   },
 };
 
-/* =======================================================
-   CARD DOS PEDIDOS
-======================================================= */
 
 export function OrderCards({
   item,
@@ -96,9 +92,6 @@ export function OrderCards({
   );
 }
 
-/* =======================================================
-   CARD DO CARDÁPIO
-======================================================= */
 
 export function ReceiptCards({
   item,
@@ -107,11 +100,11 @@ export function ReceiptCards({
   const [uploading, setUploading] = useState(false);
   const [imageVersion, setImageVersion] = useState(Date.now());
 
-  const imageUrl = useMemo(
-    () =>
-      `https://res.cloudinary.com/${cloudName}/image/upload/cardapio_imgs/${item.id}.jpg?t=${imageVersion}`,
-    [item.id, imageVersion]
-  );
+  const imageUrl = useMemo(() => {
+    if (!item.imagem) return null;
+
+    return `${item.imagem}?t=${imageVersion}`;
+  }, [item.imagem, imageVersion]);
 
   async function uploadImagem(foto) {
     const formData = new FormData();
@@ -120,11 +113,7 @@ export function ReceiptCards({
       const response = await fetch(foto.uri);
       const blob = await response.blob();
 
-      formData.append(
-        "file",
-        blob,
-        `${item.id}.jpg`
-      );
+      formData.append("file", blob, `${item.id}.jpg`);
     } else {
       formData.append("file", {
         uri: foto.uri,
@@ -144,6 +133,8 @@ export function ReceiptCards({
     if (!response.ok) {
       throw new Error(await response.text());
     }
+
+    return await response.json();
   }
 
   async function trocarFoto() {
@@ -159,8 +150,7 @@ export function ReceiptCards({
 
     const resultado =
       await ImagePicker.launchImageLibraryAsync({
-        mediaTypes:
-          ImagePicker.MediaTypeOptions.Images,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         quality: 0.7,
       });
@@ -170,12 +160,11 @@ export function ReceiptCards({
     try {
       setUploading(true);
 
-      await uploadImagem(resultado.assets[0]);
+      const data = await uploadImagem(resultado.assets[0]);
 
-      const versao = Date.now();
+      setImageVersion(Date.now());
 
-      setImageVersion(versao);
-      onImageChanged?.(item.id, versao);
+      onImageChanged?.(item.id, data.imagem);
     } catch (error) {
       console.log(error);
 
@@ -197,7 +186,11 @@ export function ReceiptCards({
       >
         <View>
           <Image
-            source={{ uri: imageUrl }}
+            source={
+              imageUrl
+                ? { uri: imageUrl }
+                : require("../assets/placeholder.png")
+            }
             style={receiptStyles.imagem}
           />
 
@@ -232,9 +225,6 @@ export function ReceiptCards({
   );
 }
 
-/* =======================================================
-   STYLES - PEDIDOS
-======================================================= */
 
 const orderStyles = StyleSheet.create({
   card: {
@@ -287,9 +277,6 @@ const orderStyles = StyleSheet.create({
   },
 });
 
-/* =======================================================
-   STYLES - CARDÁPIO
-======================================================= */
 
 const receiptStyles = StyleSheet.create({
   card: {

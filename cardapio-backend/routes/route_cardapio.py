@@ -2,6 +2,8 @@ from fastapi import *
 import cloudinary.uploader as cloudinary
 from services.cardapio_service import CardapioService
 from schemas.schemas import CardapioCreate
+from database.database import SessionLocal
+from models.models import Cardapio
 
 router = APIRouter(prefix="/cardapio", tags=["Cardápio"])
 
@@ -19,8 +21,14 @@ def criar_cardapio(cardapio:CardapioCreate):
     
 @router.post("/{item_id}/imagem")
 def upload_img(item_id: int, file: UploadFile = File(...)):
+    session = SessionLocal()
+
     try:
-        result = cloudinary.upload(
+        item = session.query(Cardapio).filter(Cardapio.id == item_id).first()
+        if not item:
+            raise HTTPException(status_code=404, detail="Item não encontrado")
+
+        img = cloudinary.upload(
             file.file,
             public_id=str(item_id),
             folder="cardapio_imgs",
@@ -28,18 +36,22 @@ def upload_img(item_id: int, file: UploadFile = File(...)):
             resource_type="image",
         )
 
+        
+        item.imagem = img["secure_url"]
+        session.commit()
+        session.refresh(item)
+        
         return {
             "success": True,
-            "url": result["secure_url"],
-            "version": result["version"],
-            "public_id": result["public_id"],
+            "imagem": item.imagem,
+            "version": img["version"],
+            "public_id": img["public_id"],
         }
-
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"Erro ao enviar imagem: {str(e)}",
-        )
+        session.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        session.close()
 
 @router.patch("/{item_id}/disponibilidade")
 def toggle_disponibilidade(item_id:int):

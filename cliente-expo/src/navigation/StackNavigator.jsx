@@ -8,7 +8,7 @@ import ScannerScreen from "../screens/ScannerScreen";
 import CardapioScreen from "../screens/CardapioScreen";
 import PedidoScreen from "../screens/PedidosScreen";
 
-import { obterToken } from "../storage/tokenStorage";
+import { obterToken, removerToken } from "../storage/tokenStorage";
 
 const Stack = createNativeStackNavigator();
 
@@ -21,9 +21,9 @@ export default function App() {
   }, []);
 
   async function verificarSessao() {
-    const token = await obterToken();
-    setRotaInicial(token ? "Cardapio" : "Scanner");
-  }
+  const token = await obterToken();
+  setRotaInicial(token ? "Cardapio" : "Scanner");
+}
 
   if (!rotaInicial) {
     return (

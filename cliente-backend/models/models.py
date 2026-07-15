@@ -39,7 +39,7 @@ class Cardapio(Base):
     preco = Column(Float,nullable=False)
     categoria = Column(String,nullable=False)  
     ativo = Column(Boolean,default=True)
-    
+    imagem = Column(String,nullable=True)
     def to_dict(self):
         return{
             "id":self.id,
@@ -47,7 +47,8 @@ class Cardapio(Base):
             "descricao":self.descricao,
             "preco":self.preco,
             "categoria":self.categoria,
-            "ativo":self.ativo
+            "ativo":self.ativo,
+            "imagem":self.imagem
         }
     
 class Pedido(Base):

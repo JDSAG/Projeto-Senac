@@ -11,6 +11,10 @@ class Config(BaseSettings):
     algorithm:str
     access_token_expire_minutes: int = 1440
     
+    cloudinary_cloud_name: str
+    cloudinary_api_key: str
+    cloudinary_api_secret: str
+    
     model_config = SettingsConfigDict(env_file='.env')
 
     @property

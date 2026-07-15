@@ -38,7 +38,25 @@ export default function CardapioScreen() {
   function atualizarEstado(id, ativo) {
     setCardapio((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, ativo } : item
+        item.id === id
+          ? {
+              ...item,
+              ativo,
+            }
+          : item
+      )
+    );
+  }
+
+  function atualizarImagem(id, imagem) {
+    setCardapio((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              imagem,
+            }
+          : item
       )
     );
   }
@@ -101,7 +119,10 @@ export default function CardapioScreen() {
                 opacity: item.ativo ? 1 : 0.45,
               }}
             >
-              <ReceiptCards item={item} />
+              <ReceiptCards
+                item={item}
+                onImageChanged={atualizarImagem}
+              />
             </View>
 
             <View style={styles.btnArea}>
