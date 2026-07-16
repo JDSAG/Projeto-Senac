@@ -2,7 +2,6 @@ from models.models import *
 from database.database import SessionLocal
 from schemas.schemas import PedidoCreate
 
-
 class PedidoService():
     @classmethod
     def create(cls, mesa_id: int, nome_cliente: str, itens: list):
@@ -119,9 +118,13 @@ class PedidoService():
                 .filter(Pedido.mesa_id == mesa_id, Pedido.status == "em_aberto")
                 .first()
             )
+            mesa = (session.query(Mesa).filter(Mesa.id == mesa_id).first())
+            
             if not pedido:
                 raise ValueError("Nenhum pedido aberto")
             pedido.status = "pendente"
+            mesa.status = "ocupado"
+            
             session.commit()
             return {"message": "Pedido finalizado"}
         except Exception as e:

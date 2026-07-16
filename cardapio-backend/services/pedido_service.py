@@ -104,11 +104,15 @@ class PedidoService():
     def concluir(cls,id:int):
         try:
             pedido = cls.session.query(Pedido).where(Pedido.id == id).one()
+            mesa = cls.session.query(Mesa).where(Mesa.id == pedido.mesa_id).first()
+            
             if pedido.status != "em_andamento":
                 cls.session.rollback()
                 raise ValueError("Erro ao concluir pedido, pedido precisa estar em andamento!")
             
             pedido.status = "concluido"
+            mesa.status = "pedido_concluido"
+            
             cls.session.commit()
             return pedido
         except Exception as e:

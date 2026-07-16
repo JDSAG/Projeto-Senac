@@ -19,7 +19,7 @@ class Mesa(Base):
     
     @validates("status")
     def validade_status(self, key, value):
-        status_validos = ["disponivel","ocupado","reservado"]
+        status_validos = ["disponivel","ocupado","reservado","pedido_concluido"]
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
         return value

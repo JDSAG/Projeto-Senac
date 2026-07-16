@@ -11,6 +11,7 @@ const STATUS_LABELS = {
   disponivel: "Disponível",
   ocupado: "Ocupada",
   reservado: "Reservada",
+  pedido_concluido:"Pedido Concluido"
 };
 
 export default function MesasScreen() {

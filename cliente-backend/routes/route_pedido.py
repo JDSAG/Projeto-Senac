@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from auth.dependencies import get_cliente_atual
-from schemas.schemas import PedidoCreate
+from schemas.schemas import PedidoCreate,MesaStatusUpdate
 from services.pedido_service import PedidoService
 
 router = APIRouter(prefix="/pedido",tags=["Pedido"])
@@ -13,7 +13,7 @@ def criar_pedido(dados: PedidoCreate,cliente=Depends(get_cliente_atual),):
             mesa_id=cliente["mesa_id"],
             nome_cliente=cliente["nome_cliente"],
             itens=dados.itens,
-        )
+        ),
     except ValueError as e:
         raise HTTPException(status_code=400,detail=str(e),)
 

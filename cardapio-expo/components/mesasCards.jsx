@@ -6,11 +6,13 @@ const statusColors = {
   disponivel: "#4CAF50",
   ocupado: "#D32F2F",
   reservado: "#757575",
+  pedido_concluido:"#01d8f9"
 };
 const statusLabels = {
   disponivel: "Disponível",
   ocupado: "Ocupada",
   reservado: "Reservada",
+  pedido_concluido:"Pedido Concluido"
 };
 
 export default function MesaCard({ mesa, onPress, onStatusPress, onQrPress }) {

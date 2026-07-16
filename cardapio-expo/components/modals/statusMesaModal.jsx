@@ -1,12 +1,13 @@
 import React from "react";
 import { Modal, View, Text, Pressable, StyleSheet } from "react-native";
 
-const STATUS_OPCOES = ["disponivel", "ocupado", "reservado"];
+const STATUS_OPCOES = ["disponivel", "ocupado", "reservado",];
 
 const STATUS_LABELS = {
   disponivel: "Disponível",
   ocupado: "Ocupada",
   reservado: "Reservada",
+  pedido_concluido:"Pedido Concluido"
 };
 
 export default function StatusMesaModal({
