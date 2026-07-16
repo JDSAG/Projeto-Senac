@@ -5,7 +5,6 @@ from config import config
 
 
 def create_access_token(data: dict):
-
     payload = data.copy()
 
     expire = datetime.utcnow() + timedelta(
