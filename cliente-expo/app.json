@@ -5,7 +5,7 @@
     "scheme": "restaurantesenac",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/senac-icon.png",
+    "icon": "./assets/logo.png",
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
@@ -15,7 +15,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/senac-icon.png",
+        "foregroundImage": "./assets/logo.png",
         "backgroundColor": "#E6F4FE"
       }
     },

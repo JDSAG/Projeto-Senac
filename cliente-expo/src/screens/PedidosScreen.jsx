@@ -86,6 +86,7 @@ export default function PedidoScreen({ navigation }) {
   }
 
   function concluirPedido() {
+    
     Alert.alert(
       "Finalizar Pedido",
       "Deseja enviar seu pedido para a cozinha?",

@@ -57,14 +57,14 @@ class Pedido(Base):
     nome_cliente = Column(String,nullable=False)
     mesa_id = Column(Integer,ForeignKey("mesas.id"),nullable=False)
     status = Column(String,default="em_aberto")
-    
     @validates("status")
-    def validade_status(self, key, value):
+    def validate_status(self, key, value):
         status_validos = ["em_aberto","pendente","em_andamento","concluido"]
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
         return value
-        
+    
+    
     mesa = relationship("Mesa",back_populates="pedidos")
     itens = relationship("ItemPedido",back_populates="pedido")
     
@@ -75,7 +75,7 @@ class Pedido(Base):
         "mesa_id": self.mesa_id,
         "status": self.status,
         "itens": [item.to_dict() for item in self.itens],
-        "total": sum(item.subtotal for item in self.itens)
+        "total": sum(item.subtotal for item in self.itens),
     }
     
 class ItemPedido(Base):

@@ -3,6 +3,7 @@ from pydantic import BaseModel
 class MesaCreate(BaseModel):
     numero:int
 
+
 class ItemPedidoCreate(BaseModel):
     produto_id: int
     quantidade: int
@@ -27,3 +28,5 @@ class LoginRequest(BaseModel):
 class TokenResponse(BaseModel):
     access_token: str
     token_type: str
+    
+

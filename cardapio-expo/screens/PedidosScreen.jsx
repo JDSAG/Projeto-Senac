@@ -29,7 +29,7 @@ export default function PedidosScreen() {
   
   const intervalo = setInterval(() => {
     buscarPedidos();
-  }, 10000); // busca a cada 10 segundos
+  }, 1000); // busca a cada 10 segundos
 
   return () => clearInterval(intervalo); // limpa ao desmontar a tela
 }, []);

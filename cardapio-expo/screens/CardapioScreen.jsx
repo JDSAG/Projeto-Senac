@@ -6,10 +6,12 @@ import {
   FlatList,
   ActivityIndicator,
   RefreshControl,
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { ReceiptCards } from "../components/adminCards";
+import { ReceiptCards, AddCardapioModal } from "../components/adminCards";
 import DisponivelBtn from "../components/disponivelBtn";
 
 const apiURL = process.env.EXPO_PUBLIC_BASE_URL;
@@ -18,6 +20,7 @@ export default function CardapioScreen() {
   const [cardapio, setCardapio] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [modalVisible, setModalVisible] = useState(false);
 
   async function carregarCardapio(showLoading = false) {
     try {
@@ -32,6 +35,27 @@ export default function CardapioScreen() {
     } finally {
       setLoading(false);
       setRefreshing(false);
+    }
+  }
+
+  async function criarItem(novoItem) {
+    try {
+      const response = await fetch(`${apiURL}/cardapio/`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(novoItem),
+      });
+
+      if (!response.ok) {
+        const erro = await response.text();
+        throw new Error(erro);
+      }
+
+      setModalVisible(false);
+      carregarCardapio();
+    } catch (error) {
+      console.log("Erro ao criar item:", error);
+      Alert.alert("Erro", "Não foi possível adicionar o item.");
     }
   }
 
@@ -93,9 +117,16 @@ export default function CardapioScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.titulo}>
-        🍔 Gerenciamento do Cardápio
-      </Text>
+      <View style={styles.headerRow}>
+        <Text style={styles.titulo}>🍔 Gerenciamento do Cardápio</Text>
+
+        <TouchableOpacity
+          style={styles.addBtn}
+          onPress={() => setModalVisible(true)}
+        >
+          <Text style={styles.addBtnTexto}>+ Adicionar</Text>
+        </TouchableOpacity>
+      </View>
 
       <FlatList
         data={cardapio}
@@ -137,6 +168,12 @@ export default function CardapioScreen() {
           </View>
         )}
       />
+
+      <AddCardapioModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSubmit={criarItem}
+      />
     </View>
   );
 }
@@ -149,12 +186,31 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
 
+  headerRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+
   titulo: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#222",
-    marginBottom: 20,
-    alignSelf: "center",
+    flexShrink: 1,
+  },
+
+  addBtn: {
+    backgroundColor: "#2E7D32",
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 8,
+  },
+
+  addBtnTexto: {
+    color: "#FFF",
+    fontWeight: "600",
+    fontSize: 14,
   },
 
   lista: {

@@ -65,7 +65,7 @@ class Pedido(Base):
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
         return value
-        
+    
     mesa = relationship("Mesa",back_populates="pedidos")
     itens = relationship("ItemPedido",back_populates="pedido")
     
@@ -76,9 +76,9 @@ class Pedido(Base):
         "mesa_id": self.mesa_id,
         "status": self.status,
         "itens": [item.to_dict() for item in self.itens],
-        "total": sum(item.subtotal for item in self.itens)
+        "total": sum(item.subtotal for item in self.itens),
     }
-    
+
 class ItemPedido(Base):
     __tablename__ = "itens_pedido"
     id = Column(Integer, primary_key=True)

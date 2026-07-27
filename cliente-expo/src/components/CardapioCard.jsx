@@ -20,6 +20,11 @@ export default function CardapioCard({ item, onAdicionar }) {
     setQuantidade((q) => q + 1);
   }
 
+  function adicionar() {
+    onAdicionar(quantidade);
+    setQuantidade(1);
+  }
+
   return (
     <View style={styles.card}>
       {item.imagem ? (
@@ -30,145 +35,153 @@ export default function CardapioCard({ item, onAdicionar }) {
         />
       ) : (
         <View style={styles.semImagem}>
-          <Text style={styles.semImagemTexto}>
-            Sem imagem
-          </Text>
+          <Text style={styles.semImagemTexto}>Sem{"\n"}imagem</Text>
         </View>
       )}
 
-      <Text style={styles.nome}>
-        {item.nome}
-      </Text>
-
-      <Text style={styles.descricao}>
-        {item.descricao}
-      </Text>
-
-      <Text style={styles.preco}>
-        R$ {Number(item.preco).toFixed(2)}
-      </Text>
-
-      <View style={styles.quantidadeContainer}>
-        <TouchableOpacity
-          style={styles.quantidadeBotao}
-          onPress={diminuir}
-        >
-          <Text style={styles.quantidadeTexto}>-</Text>
-        </TouchableOpacity>
-
-        <Text style={styles.quantidade}>
-          {quantidade}
+      <View style={styles.info}>
+        <Text style={styles.nome} numberOfLines={1}>
+          {item.nome}
         </Text>
 
-        <TouchableOpacity
-          style={styles.quantidadeBotao}
-          onPress={aumentar}
-        >
-          <Text style={styles.quantidadeTexto}>+</Text>
-        </TouchableOpacity>
+        <Text style={styles.descricao} numberOfLines={2}>
+          {item.descricao}
+        </Text>
+
+        <Text style={styles.preco}>
+          R$ {Number(item.preco).toFixed(2)}
+        </Text>
+
+        <View style={styles.acoes}>
+          <View style={styles.quantidadeContainer}>
+            <TouchableOpacity style={styles.quantidadeBotao} onPress={diminuir}>
+              <Text style={styles.quantidadeBotaoTexto}>-</Text>
+            </TouchableOpacity>
+
+            <Text style={styles.quantidade}>{quantidade}</Text>
+
+            <TouchableOpacity style={styles.quantidadeBotao} onPress={aumentar}>
+              <Text style={styles.quantidadeBotaoTexto}>+</Text>
+            </TouchableOpacity>
+          </View>
+
+          <TouchableOpacity style={styles.botao} onPress={adicionar}>
+            <Text style={styles.botaoTexto}>Adicionar</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-
-      <TouchableOpacity
-        style={styles.botao}
-        onPress={() => onAdicionar(quantidade)}
-      >
-        <Text style={styles.textoBotao}>
-          Adicionar
-        </Text>
-      </TouchableOpacity>
     </View>
   );
 }
 
+const IMAGE_SIZE = 92;
+
 const styles = StyleSheet.create({
   card: {
+    flexDirection: "row",
     backgroundColor: "#FFF",
-    marginBottom: 15,
-    padding: 15,
-    borderRadius: 15,
-    elevation: 3,
+    marginBottom: 12,
+    padding: 12,
+    borderRadius: 16,
+    elevation: 2,
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 6,
+    shadowOffset: { width: 0, height: 2 },
   },
 
   image: {
-    width: "100%",
-    height: 190,
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
     borderRadius: 12,
-    marginBottom: 12,
   },
 
   semImagem: {
-    width: "100%",
-    height: 190,
+    width: IMAGE_SIZE,
+    height: IMAGE_SIZE,
     borderRadius: 12,
     backgroundColor: "#E5E7EB",
     justifyContent: "center",
     alignItems: "center",
-    marginBottom: 12,
   },
 
   semImagemTexto: {
-    color: "#777",
-    fontSize: 16,
+    color: "#9CA3AF",
+    fontSize: 12,
+    textAlign: "center",
+  },
+
+  info: {
+    flex: 1,
+    marginLeft: 12,
+    justifyContent: "space-between",
   },
 
   nome: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#111827",
   },
 
   descricao: {
     color: "#6B7280",
-    marginTop: 6,
-    marginBottom: 10,
-    fontSize: 14,
+    fontSize: 13,
+    marginTop: 2,
+    lineHeight: 17,
   },
 
   preco: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "bold",
     color: "#16A34A",
-    marginBottom: 15,
+    marginTop: 6,
+  },
+
+  acoes: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginTop: 8,
   },
 
   quantidadeContainer: {
     flexDirection: "row",
-    justifyContent: "center",
     alignItems: "center",
-    marginBottom: 15,
+    backgroundColor: "#F3F4F6",
+    borderRadius: 10,
   },
 
   quantidadeBotao: {
-    width: 42,
-    height: 42,
-    borderRadius: 10,
-    backgroundColor: "#111827",
+    width: 30,
+    height: 30,
     justifyContent: "center",
     alignItems: "center",
   },
 
-  quantidadeTexto: {
-    color: "#FFF",
-    fontSize: 24,
+  quantidadeBotaoTexto: {
+    color: "#111827",
+    fontSize: 18,
     fontWeight: "bold",
   },
 
   quantidade: {
-    marginHorizontal: 22,
-    fontSize: 20,
+    minWidth: 20,
+    textAlign: "center",
+    fontSize: 15,
     fontWeight: "bold",
+    color: "#111827",
   },
 
   botao: {
-    backgroundColor: "#111827",
-    paddingVertical: 14,
-    borderRadius: 12,
-    alignItems: "center",
+    backgroundColor: "#16A34A",
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 10,
   },
 
-  textoBotao: {
+  botaoTexto: {
     color: "#FFF",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 13,
   },
 });

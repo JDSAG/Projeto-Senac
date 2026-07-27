@@ -25,7 +25,7 @@ export function useMesas() {
 
   useEffect(() => {
     buscarMesas();
-    const intervalo = setInterval(buscarMesas, 10000);
+    const intervalo = setInterval(buscarMesas, 5000);
     return () => clearInterval(intervalo);
   }, [buscarMesas]);
 

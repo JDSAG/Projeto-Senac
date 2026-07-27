@@ -8,6 +8,8 @@ import {
   Platform,
   ActivityIndicator,
   Alert,
+  Modal,
+  TextInput,
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
@@ -24,8 +26,129 @@ const STATUS = {
     cor: "#4CAF50",
     label: "Em andamento",
   },
+  concluido: {
+    cor: "#2196F3",
+    label: "Concluído",
+  },
 };
 
+export function AddCardapioModal({ visible, onClose, onSubmit }) {
+  const [nome, setNome] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [preco, setPreco] = useState("");
+  const [categoria, setCategoria] = useState("");
+  const [enviando, setEnviando] = useState(false);
+
+  function limparCampos() {
+    setNome("");
+    setDescricao("");
+    setPreco("");
+    setCategoria("");
+  }
+
+  async function handleSubmit() {
+    if (!nome.trim() || !descricao.trim() || !preco || !categoria.trim()) {
+      return Alert.alert(
+        "Campos obrigatórios",
+        "Preencha todos os campos antes de continuar."
+      );
+    }
+
+    const precoNumerico = Number(preco.replace(",", "."));
+
+    if (isNaN(precoNumerico) || precoNumerico <= 0) {
+      return Alert.alert("Preço inválido", "Informe um preço válido.");
+    }
+
+    try {
+      setEnviando(true);
+
+      await onSubmit({
+        nome: nome.trim(),
+        descricao: descricao.trim(),
+        preco: precoNumerico,
+        categoria: categoria.trim(),
+      });
+
+      limparCampos();
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  function handleClose() {
+    if (enviando) return;
+    limparCampos();
+    onClose();
+  }
+
+  return (
+    <Modal
+      visible={visible}
+      animationType="slide"
+      transparent
+      onRequestClose={handleClose}
+    >
+      <View style={modalStyles.overlay}>
+        <View style={modalStyles.card}>
+          <Text style={modalStyles.titulo}>Novo Item do Cardápio</Text>
+
+          <TextInput
+            style={modalStyles.input}
+            placeholder="Nome"
+            value={nome}
+            onChangeText={setNome}
+          />
+
+          <TextInput
+            style={[modalStyles.input, modalStyles.textArea]}
+            placeholder="Descrição"
+            value={descricao}
+            onChangeText={setDescricao}
+            multiline
+          />
+
+          <TextInput
+            style={modalStyles.input}
+            placeholder="Preço (ex: 19.90)"
+            value={preco}
+            onChangeText={setPreco}
+            keyboardType="decimal-pad"
+          />
+
+          <TextInput
+            style={modalStyles.input}
+            placeholder="Categoria"
+            value={categoria}
+            onChangeText={setCategoria}
+          />
+
+          <View style={modalStyles.botoes}>
+            <TouchableOpacity
+              style={[modalStyles.botao, modalStyles.cancelar]}
+              onPress={handleClose}
+              disabled={enviando}
+            >
+              <Text style={modalStyles.botaoTexto}>Cancelar</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[modalStyles.botao, modalStyles.confirmar]}
+              onPress={handleSubmit}
+              disabled={enviando}
+            >
+              {enviando ? (
+                <ActivityIndicator color="#FFF" size="small" />
+              ) : (
+                <Text style={modalStyles.botaoTexto}>Adicionar</Text>
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
 
 export function OrderCards({
   item,
@@ -225,6 +348,69 @@ export function ReceiptCards({
   );
 }
 
+const modalStyles = StyleSheet.create({
+  overlay: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.45)",
+    justifyContent: "center",
+    padding: 20,
+  },
+
+  card: {
+    backgroundColor: "#FFF",
+    borderRadius: 14,
+    padding: 20,
+  },
+
+  titulo: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 16,
+    textAlign: "center",
+  },
+
+  input: {
+    borderWidth: 1,
+    borderColor: "#DDD",
+    borderRadius: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    fontSize: 15,
+    marginBottom: 12,
+  },
+
+  textArea: {
+    height: 70,
+    textAlignVertical: "top",
+  },
+
+  botoes: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    gap: 10,
+    marginTop: 8,
+  },
+
+  botao: {
+    flex: 1,
+    paddingVertical: 12,
+    borderRadius: 8,
+    alignItems: "center",
+  },
+
+  cancelar: {
+    backgroundColor: "#E0E0E0",
+  },
+
+  confirmar: {
+    backgroundColor: "#2E7D32",
+  },
+
+  botaoTexto: {
+    color: "#FFF",
+    fontWeight: "600",
+  },
+});
 
 const orderStyles = StyleSheet.create({
   card: {
