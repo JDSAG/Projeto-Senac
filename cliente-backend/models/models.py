@@ -1,5 +1,6 @@
 from sqlalchemy import *
 from sqlalchemy.orm import declarative_base, relationship,validates
+from datetime import datetime as dt
 
 Base = declarative_base()
 
@@ -57,13 +58,14 @@ class Pedido(Base):
     nome_cliente = Column(String,nullable=False)
     mesa_id = Column(Integer,ForeignKey("mesas.id"),nullable=False)
     status = Column(String,default="em_aberto")
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    
     @validates("status")
-    def validate_status(self, key, value):
+    def validade_status(self, key, value):
         status_validos = ["em_aberto","pendente","em_andamento","concluido"]
         if value not in status_validos:
             raise ValueError(f"Status inválido. Deve ser um dos seguintes: {status_validos}")
         return value
-    
     
     mesa = relationship("Mesa",back_populates="pedidos")
     itens = relationship("ItemPedido",back_populates="pedido")
@@ -74,6 +76,7 @@ class Pedido(Base):
         "nome_cliente": self.nome_cliente,
         "mesa_id": self.mesa_id,
         "status": self.status,
+        "created_at":self.created_at,
         "itens": [item.to_dict() for item in self.itens],
         "total": sum(item.subtotal for item in self.itens),
     }
