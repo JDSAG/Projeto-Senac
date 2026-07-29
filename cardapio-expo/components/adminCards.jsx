@@ -215,7 +215,6 @@ export function OrderCards({
   );
 }
 
-
 export function ReceiptCards({
   item,
   onImageChanged,
@@ -399,7 +398,7 @@ const modalStyles = StyleSheet.create({
   },
 
   cancelar: {
-    backgroundColor: "#E0E0E0",
+    backgroundColor: "#ff0000",
   },
 
   confirmar: {

@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import MesasScreen from "../screens/MesasScreen";
 import CardapioScreen from "../screens/CardapioScreen";
+import DashboardScreen from "../screens/DashboardScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -30,6 +31,15 @@ export default function CaixaNavigator() {
           tabBarIcon: ({ size, color }) => (
             <Image
               source={require("../assets/cardapio.png")}
+              style={{width: size, height: size, tintColor: color,}}/>
+          ),}}/>
+          <Tab.Screen
+        name="Dashboard"
+        component={DashboardScreen}
+        options={{
+          tabBarIcon: ({ size, color }) => (
+            <Image
+              source={require("../assets/data-analysis.png")}
               style={{width: size, height: size, tintColor: color,}}/>
           ),}}/>
     </Tab.Navigator>
