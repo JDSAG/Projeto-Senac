@@ -25,7 +25,15 @@ def create_mesa(mesa: MesaCreate):
 @router.get("/{mesa_id}", name="find_id_mesa")
 def find_id_mesa(mesa_id: int):
     try:
-        return MesaService.find_by_id(mesa_id)
+        mesa = MesaService.find_by_id(mesa_id)
+        if not mesa:
+            raise HTTPException(status_code=404, detail="Mesa não encontrada")
+        return {
+            "mesa_id": mesa.id,
+            "numero": mesa.numero,
+        }
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
 
